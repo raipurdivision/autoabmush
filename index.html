@@ -4,6 +4,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,6 +74,91 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .mobile-toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mobile-toggle-label {
+            color: white;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* Mobile view styles */
+        body.mobile-view .container {
+            max-width: 100%;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        body.mobile-view {
+            padding: 0;
+        }
+
+        body.mobile-view .header h1 {
+            font-size: 1.3em;
+        }
+
+        body.mobile-view .header h2 {
+            font-size: 0.9em;
+        }
+
+        body.mobile-view .header-content {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        body.mobile-view .form-container {
+            padding: 15px;
+        }
+
+        body.mobile-view .info-fields {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        body.mobile-view .info-field {
+            flex: 1 1 100%;
+        }
+
+        body.mobile-view table {
+            font-size: 10px;
+        }
+
+        body.mobile-view th,
+        body.mobile-view td {
+            padding: 5px 3px;
+            font-size: 9px;
+        }
+
+        body.mobile-view input[type="text"],
+        body.mobile-view input[type="time"],
+        body.mobile-view input[type="date"],
+        body.mobile-view select,
+        body.mobile-view textarea {
+            font-size: 11px;
+            padding: 5px;
+        }
+
+        body.mobile-view .button-group {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        body.mobile-view button {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 0.9em;
+        }
+
+        body.mobile-view .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .voice-toggle-label {
@@ -483,6 +570,99 @@
             border: 2px solid #f5c6cb;
         }
 
+        /* Zoom Overlay Styles */
+        .zoom-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-overlay.active {
+            display: flex;
+        }
+
+        .zoom-input-container {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .zoom-input-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .zoom-input-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .zoom-close-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 1.5em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .zoom-close-btn:hover {
+            background: #c0392b;
+        }
+
+        .zoom-input {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            font-size: 18px;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            resize: vertical;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .zoom-input:focus {
+            outline: none;
+            border-color: #357abd;
+            box-shadow: 0 0 10px rgba(74, 144, 226, 0.3);
+        }
+
+        .zoom-done-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .zoom-done-btn:hover {
+            background: #229954;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.5em;
@@ -518,12 +698,30 @@
     </style>
 </head>
 <body>
+    <!-- Zoom Overlay for Mobile View -->
+    <div class="zoom-overlay" id="zoomOverlay">
+        <div class="zoom-input-container">
+            <div class="zoom-input-header">
+                <span class="zoom-input-title" id="zoomTitle">Enter Text</span>
+                <button class="zoom-close-btn" onclick="closeZoomInput()">×</button>
+            </div>
+            <textarea class="zoom-input" id="zoomInput" placeholder="Type or speak here..."></textarea>
+            <button class="zoom-done-btn" onclick="closeZoomInput()">✓ Done</button>
+        </div>
+    </div>
+
     <div class="container">
         <div class="header">
             <h1>Conducted Ambush Check in Auto Signalling Section</h1>
             <h2>Raipur Division</h2>
             <div class="header-content">
-                <div></div>
+                <div class="mobile-toggle-container">
+                    <span class="mobile-toggle-label">📱 Mobile View</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="mobileToggle" onchange="toggleMobileView()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
                 <div class="voice-toggle-container">
                     <span class="voice-toggle-label">🎤 Voice</span>
                     <label class="toggle-switch">
@@ -860,14 +1058,16 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('p', 'mm', 'a4');
 
-            // Add title
+            // Add title with dark blue color
             doc.setFontSize(16);
             doc.setFont(undefined, 'bold');
+            doc.setTextColor(0, 51, 102); // Dark blue color
             doc.text('Conducted Ambush Check in Auto Signalling Section', doc.internal.pageSize.getWidth() / 2, 15, { align: 'center' });
 
-            // Add Raipur Division heading
+            // Add Raipur Division heading with dark blue color
             doc.setFontSize(14);
             doc.setFont(undefined, 'bold');
+            doc.setTextColor(0, 51, 102); // Dark blue color
             doc.text('Raipur Division', doc.internal.pageSize.getWidth() / 2, 23, { align: 'center' });
 
             // Add full-page horizontal line below Raipur Division
@@ -880,6 +1080,7 @@
             const place = document.getElementById('place').value || '';
             const speedGun = document.getElementById('speedGun').value || '';
 
+            doc.setTextColor(0, 0, 0); // Reset to black for body text
             doc.setFontSize(10);
             doc.setFont(undefined, 'bold');
             doc.text('PLACE - ' + place, 14, 35);
@@ -1279,7 +1480,20 @@
             currentInput = null;
         }
 
+        let originalInputElement = null;
+
         function handleInputFocus(event) {
+            // Show zoom overlay in mobile view for table inputs
+            if (document.body.classList.contains('mobile-view')) {
+                const target = event.target;
+                const isTableInput = target.closest('td') !== null;
+
+                if (isTableInput) {
+                    openZoomInput(target);
+                    return;
+                }
+            }
+
             if (voiceEnabled) {
                 currentInput = event.target;
                 currentInput.style.borderColor = '#e74c3c';
@@ -1294,6 +1508,48 @@
             }
         }
 
+        function openZoomInput(inputElement) {
+            originalInputElement = inputElement;
+            const zoomOverlay = document.getElementById('zoomOverlay');
+            const zoomInput = document.getElementById('zoomInput');
+            const zoomTitle = document.getElementById('zoomTitle');
+
+            // Get the field label or placeholder
+            const label = inputElement.placeholder || inputElement.getAttribute('aria-label') || 'Enter Text';
+            zoomTitle.textContent = label;
+
+            // Set current value
+            zoomInput.value = inputElement.value;
+
+            // Show overlay
+            zoomOverlay.classList.add('active');
+
+            // Focus on zoom input
+            setTimeout(() => {
+                zoomInput.focus();
+            }, 100);
+
+            // Prevent original input from focusing
+            inputElement.blur();
+        }
+
+        function closeZoomInput() {
+            const zoomOverlay = document.getElementById('zoomOverlay');
+            const zoomInput = document.getElementById('zoomInput');
+
+            if (originalInputElement) {
+                // Transfer value back to original input
+                originalInputElement.value = zoomInput.value;
+            }
+
+            // Hide overlay
+            zoomOverlay.classList.remove('active');
+
+            // Clear zoom input
+            zoomInput.value = '';
+            originalInputElement = null;
+        }
+
         // Handle dynamically added rows
         const originalAddRow = addRow;
         addRow = function() {
@@ -1303,10 +1559,32 @@
             }
         };
 
+        // Mobile View Toggle
+        function toggleMobileView() {
+            const toggle = document.getElementById('mobileToggle');
+            if (toggle.checked) {
+                document.body.classList.add('mobile-view');
+                showMessage('Mobile view enabled!', 'success');
+            } else {
+                document.body.classList.remove('mobile-view');
+                showMessage('Mobile view disabled!', 'success');
+            }
+        }
+
         // Set today's date as default
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('formDate').value = today;
+
+            // Add focus listeners for mobile zoom (always active)
+            document.addEventListener('focus', function(event) {
+                const target = event.target;
+                const isTableInput = target.matches('input[type="text"], textarea') && target.closest('td') !== null;
+
+                if (isTableInput && document.body.classList.contains('mobile-view')) {
+                    handleInputFocus(event);
+                }
+            }, true);
         });
     </script>
 </body>
