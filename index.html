@@ -1,6 +1,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +39,7 @@
             color: white;
             padding: 30px;
             text-align: center;
+            position: relative;
         }
 
         .header h1 {
@@ -45,6 +48,151 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .header h2 {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            margin-top: 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .voice-toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .voice-toggle-label {
+            color: white;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            display: inline-block;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ffb366;
+            transition: 0.4s;
+            border-radius: 26px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        input:checked + .slider {
+            background-color: #2ecc71;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        .voice-status {
+            color: white;
+            font-size: 0.75em;
+            font-weight: bold;
+            min-width: 30px;
+        }
+
+        .voice-indicator {
+            display: none;
+            color: white;
+            font-size: 1.3em;
+            animation: pulse 1.5s infinite;
+            margin-left: 5px;
+        }
+
+        .voice-indicator.listening {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .listening-text {
+            font-size: 0.75em;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            color: #e74c3c;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+        }
+
+        .input-with-mic {
+            position: relative;
+        }
+
+        .mic-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .mic-icon.active {
+            color: #e74c3c;
+            animation: micPulse 1s infinite;
+        }
+
+        @keyframes micPulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
         }
 
         .form-container {
@@ -287,6 +435,32 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
 
+        .save-draft-btn {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+        }
+
+        .save-draft-btn:hover {
+            background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .upload-draft-btn {
+            background: linear-gradient(135deg, #16a085 0%, #138d75 100%);
+            color: white;
+        }
+
+        .upload-draft-btn:hover {
+            background: linear-gradient(135deg, #138d75 0%, #117a65 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        #draftFileInput {
+            display: none;
+        }
+
         .message {
             display: none;
             margin-top: 20px;
@@ -313,6 +487,25 @@
                 font-size: 1.5em;
             }
 
+            .header h2 {
+                font-size: 1em;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .voice-toggle-container {
+                flex-direction: row;
+                gap: 8px;
+            }
+
+            .voice-toggle-label {
+                font-size: 0.7em;
+            }
+
             .button-group {
                 flex-direction: column;
             }
@@ -327,6 +520,22 @@
     <div class="container">
         <div class="header">
             <h1>Conducted Ambush Check in Auto Signalling Section</h1>
+            <h2>Raipur Division</h2>
+            <div class="header-content">
+                <div></div>
+                <div class="voice-toggle-container">
+                    <span class="voice-toggle-label">🎤 Voice</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="voiceToggle" onchange="toggleVoiceTyping()">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="voice-status" id="voiceStatus">OFF</span>
+                    <span class="voice-indicator" id="voiceIndicator">
+                        <span>🎤</span>
+                        <span class="listening-text">Listening</span>
+                    </span>
+                </div>
+            </div>
         </div>
 
         <div class="form-container">
@@ -554,7 +763,11 @@
                 </div>
             </div>
 
+            <input type="file" id="draftFileInput" accept=".json" onchange="handleDraftUpload(event)">
+
             <div class="button-group">
+                <button class="save-draft-btn" onclick="saveDraft()">Save Draft</button>
+                <button class="upload-draft-btn" onclick="document.getElementById('draftFileInput').click()">Upload Draft</button>
                 <button class="submit-btn" onclick="submitForm()">Submit</button>
                 <button class="pdf-btn" onclick="generatePDF()">Generate PDF</button>
             </div>
@@ -649,7 +862,18 @@
             // Add title
             doc.setFontSize(16);
             doc.setFont(undefined, 'bold');
-            doc.text('CONDUCTED AMBUSH CHECK IN AUTO SIGNALLING SECTION', doc.internal.pageSize.getWidth() / 2, 15, { align: 'center' });
+            doc.text('Conducted Ambush Check in Auto Signalling Section', doc.internal.pageSize.getWidth() / 2, 15, { align: 'center' });
+
+            // Add Raipur Division heading
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text('Raipur Division', doc.internal.pageSize.getWidth() / 2, 23, { align: 'center' });
+
+            // Add full-page horizontal line below Raipur Division
+            const pageWidth = doc.internal.pageSize.getWidth();
+            doc.setDrawColor(0, 0, 0); // Black color
+            doc.setLineWidth(0.5);
+            doc.line(14, 26, pageWidth - 14, 26); // Full-page line from left margin to right margin
 
             // Add Place and Speed Gun info
             const place = document.getElementById('place').value || '';
@@ -657,16 +881,16 @@
 
             doc.setFontSize(10);
             doc.setFont(undefined, 'bold');
-            doc.text('PLACE - ' + place, 14, 25);
-            doc.text('SPEED GUN', 14, 32);
+            doc.text('PLACE - ' + place, 14, 35);
+            doc.text('SPEED GUN', 14, 42);
 
             // Add checklist
             doc.setFontSize(9);
             doc.setFont(undefined, 'bold');
-            doc.text('Ambush checking was carried out at following points by using speed gun in Auto.sig.section:', 14, 40);
+            doc.text('Ambush checking was carried out at following points by using speed gun in Auto.sig.section:', 14, 50);
             doc.setFont(undefined, 'normal');
-            doc.text('1. Whether rules of Auto Signalling section are being followed by LP/ALP in case signal at danger.', 14, 46);
-            doc.text('2. Whether speed of the train after crossing the red signal was as per prescribed speed in G&SR.', 14, 52);
+            doc.text('1. Whether rules of Auto Signalling section are being followed by LP/ALP in case signal at danger.', 14, 56);
+            doc.text('2. Whether speed of the train after crossing the red signal was as per prescribed speed in G&SR.', 14, 62);
 
             // Get table data
             const rows = document.querySelectorAll('#tableBody tr');
@@ -690,9 +914,9 @@
 
             // Generate table
             doc.autoTable({
-                head: [['Sl no.', 'Time', 'Train Number', 'Signal Number', 'Time taken by LP', 'Speed (km/h)', 'Name of LP', 'Remarks']],
+                head: [['Sl no.', 'Loco No', 'Train Number', 'UP/DN', 'Signal Number', 'Time', 'Speed (km/h)', 'Rule followed']],
                 body: tableData,
-                startY: 58,
+                startY: 68,
                 theme: 'grid',
                 headStyles: {
                     fillColor: [74, 144, 226],
@@ -816,6 +1040,264 @@
                 messageDiv.style.display = 'none';
             }, 3000);
         }
+
+        function saveDraft() {
+            const rows = document.querySelectorAll('#tableBody tr');
+            const tableData = [];
+
+            rows.forEach((row) => {
+                const cells = row.querySelectorAll('input, textarea');
+                const rowData = {
+                    locoNo: cells[0].value || '',
+                    trainNumber: cells[1].value || '',
+                    upDn: cells[2].value || '',
+                    signalNumber: cells[3].value || '',
+                    time: cells[4].value || '',
+                    speed: cells[5].value || '',
+                    ruleFollowed: cells[6].value || ''
+                };
+                tableData.push(rowData);
+            });
+
+            const draftData = {
+                place: document.getElementById('place').value || '',
+                speedGun: document.getElementById('speedGun').value || '',
+                tableData: tableData,
+                otherRemarks: document.getElementById('otherRemarks').value || '',
+                formDate: document.getElementById('formDate').value || '',
+                cliName: document.getElementById('cliName').value || '',
+                rowCount: rowCount
+            };
+
+            // Convert to JSON and download
+            const jsonString = JSON.stringify(draftData, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const timestamp = new Date().toISOString().split('T')[0];
+            a.download = `Ambush_Check_Draft_${timestamp}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showMessage('Draft saved successfully!', 'success');
+        }
+
+        function handleDraftUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const draftData = JSON.parse(e.target.result);
+
+                    // Restore basic info
+                    document.getElementById('place').value = draftData.place || '';
+                    document.getElementById('speedGun').value = draftData.speedGun || '';
+                    document.getElementById('otherRemarks').value = draftData.otherRemarks || '';
+                    document.getElementById('formDate').value = draftData.formDate || '';
+                    document.getElementById('cliName').value = draftData.cliName || '';
+
+                    // Clear existing table rows
+                    const tableBody = document.getElementById('tableBody');
+                    tableBody.innerHTML = '';
+
+                    // Restore table data
+                    rowCount = 0;
+                    draftData.tableData.forEach((rowData) => {
+                        rowCount++;
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                            <td class="row-number">${rowCount}</td>
+                            <td><input type="text" value="${rowData.locoNo}"></td>
+                            <td><input type="text" value="${rowData.trainNumber}"></td>
+                            <td><input type="text" value="${rowData.upDn}"></td>
+                            <td><input type="text" value="${rowData.signalNumber}"></td>
+                            <td><input type="time" value="${rowData.time}"></td>
+                            <td><input type="text" value="${rowData.speed}"></td>
+                            <td><textarea rows="2">${rowData.ruleFollowed}</textarea></td>
+                        `;
+                        tableBody.appendChild(newRow);
+                    });
+
+                    showMessage('Draft uploaded successfully!', 'success');
+                } catch (error) {
+                    showMessage('Error loading draft file. Please check the file format.', 'error');
+                    console.error('Draft upload error:', error);
+                }
+            };
+            reader.readAsText(file);
+
+            // Reset file input so the same file can be uploaded again
+            event.target.value = '';
+        }
+
+        // Voice Typing Functionality
+        let recognition = null;
+        let voiceEnabled = false;
+        let currentInput = null;
+
+        function initVoiceRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.lang = 'en-US';
+
+                recognition.onstart = function() {
+                    document.getElementById('voiceIndicator').classList.add('listening');
+                };
+
+                recognition.onend = function() {
+                    document.getElementById('voiceIndicator').classList.remove('listening');
+                    if (voiceEnabled) {
+                        // Restart recognition if still enabled
+                        setTimeout(() => {
+                            if (voiceEnabled) {
+                                try {
+                                    recognition.start();
+                                } catch (e) {
+                                    console.log('Recognition restart error:', e);
+                                }
+                            }
+                        }, 100);
+                    }
+                };
+
+                recognition.onresult = function(event) {
+                    if (!currentInput) return;
+
+                    let interimTranscript = '';
+                    let finalTranscript = '';
+
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        const transcript = event.results[i][0].transcript;
+                        if (event.results[i].isFinal) {
+                            finalTranscript += transcript + ' ';
+                        } else {
+                            interimTranscript += transcript;
+                        }
+                    }
+
+                    if (finalTranscript) {
+                        const currentValue = currentInput.value;
+                        const cursorPos = currentInput.selectionStart;
+                        const textBefore = currentValue.substring(0, cursorPos);
+                        const textAfter = currentValue.substring(cursorPos);
+
+                        currentInput.value = textBefore + finalTranscript + textAfter;
+
+                        // Move cursor to end of inserted text
+                        const newCursorPos = textBefore.length + finalTranscript.length;
+                        currentInput.setSelectionRange(newCursorPos, newCursorPos);
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error:', event.error);
+                    if (event.error === 'no-speech') {
+                        // Ignore no-speech errors
+                        return;
+                    }
+                    if (event.error === 'not-allowed') {
+                        showMessage('Microphone access denied. Please allow microphone access in your browser settings.', 'error');
+                        document.getElementById('voiceToggle').checked = false;
+                        toggleVoiceTyping();
+                    }
+                };
+
+                return true;
+            } else {
+                showMessage('Voice recognition is not supported in your browser. Please use Chrome or Edge.', 'error');
+                return false;
+            }
+        }
+
+        function toggleVoiceTyping() {
+            const toggle = document.getElementById('voiceToggle');
+            const status = document.getElementById('voiceStatus');
+
+            voiceEnabled = toggle.checked;
+
+            if (voiceEnabled) {
+                if (!recognition) {
+                    if (!initVoiceRecognition()) {
+                        toggle.checked = false;
+                        return;
+                    }
+                }
+
+                status.textContent = 'ON';
+                status.style.color = '#2ecc71';
+
+                try {
+                    recognition.start();
+                    showMessage('Voice typing enabled! Click on any text field to start dictating.', 'success');
+                    setupVoiceInputs();
+                } catch (e) {
+                    console.log('Recognition already started');
+                }
+            } else {
+                status.textContent = 'OFF';
+                status.style.color = 'white';
+
+                if (recognition) {
+                    recognition.stop();
+                }
+
+                document.getElementById('voiceIndicator').classList.remove('listening');
+                showMessage('Voice typing disabled.', 'success');
+                removeVoiceInputs();
+            }
+        }
+
+        function setupVoiceInputs() {
+            const inputs = document.querySelectorAll('input[type="text"], textarea');
+
+            inputs.forEach(input => {
+                input.addEventListener('focus', handleInputFocus);
+                input.addEventListener('blur', handleInputBlur);
+            });
+        }
+
+        function removeVoiceInputs() {
+            const inputs = document.querySelectorAll('input[type="text"], textarea');
+
+            inputs.forEach(input => {
+                input.removeEventListener('focus', handleInputFocus);
+                input.removeEventListener('blur', handleInputBlur);
+            });
+
+            currentInput = null;
+        }
+
+        function handleInputFocus(event) {
+            if (voiceEnabled) {
+                currentInput = event.target;
+                currentInput.style.borderColor = '#e74c3c';
+                currentInput.style.boxShadow = '0 0 10px rgba(231, 76, 60, 0.3)';
+            }
+        }
+
+        function handleInputBlur(event) {
+            if (voiceEnabled && event.target === currentInput) {
+                event.target.style.borderColor = '#b3d9ff';
+                event.target.style.boxShadow = 'none';
+            }
+        }
+
+        // Handle dynamically added rows
+        const originalAddRow = addRow;
+        addRow = function() {
+            originalAddRow();
+            if (voiceEnabled) {
+                setupVoiceInputs();
+            }
+        };
 
         // Set today's date as default
         document.addEventListener('DOMContentLoaded', function() {
