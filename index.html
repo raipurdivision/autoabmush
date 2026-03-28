@@ -3,6 +3,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1149,23 +1150,11 @@
                 recognition.lang = 'en-US';
 
                 recognition.onstart = function() {
-                    document.getElementById('voiceIndicator').classList.add('listening');
+                    // Voice recognition started - indicator managed by toggle state
                 };
 
                 recognition.onend = function() {
-                    document.getElementById('voiceIndicator').classList.remove('listening');
-                    if (voiceEnabled) {
-                        // Restart recognition if still enabled
-                        setTimeout(() => {
-                            if (voiceEnabled) {
-                                try {
-                                    recognition.start();
-                                } catch (e) {
-                                    console.log('Recognition restart error:', e);
-                                }
-                            }
-                        }, 100);
-                    }
+                    // Voice recognition ended - indicator managed by toggle state
                 };
 
                 recognition.onresult = function(event) {
@@ -1217,29 +1206,44 @@
             }
         }
 
-        function toggleVoiceTyping() {
+        async function toggleVoiceTyping() {
             const toggle = document.getElementById('voiceToggle');
             const status = document.getElementById('voiceStatus');
 
             voiceEnabled = toggle.checked;
 
             if (voiceEnabled) {
-                if (!recognition) {
-                    if (!initVoiceRecognition()) {
-                        toggle.checked = false;
-                        return;
-                    }
-                }
-
-                status.textContent = 'ON';
-                status.style.color = '#2ecc71';
-
+                // Request microphone permission
                 try {
-                    recognition.start();
-                    showMessage('Voice typing enabled! Click on any text field to start dictating.', 'success');
-                    setupVoiceInputs();
-                } catch (e) {
-                    console.log('Recognition already started');
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    // Stop the stream immediately after getting permission
+                    stream.getTracks().forEach(track => track.stop());
+
+                    if (!recognition) {
+                        if (!initVoiceRecognition()) {
+                            toggle.checked = false;
+                            return;
+                        }
+                    }
+
+                    status.textContent = 'ON';
+                    status.style.color = '#2ecc71';
+
+                    // Show listening indicator
+                    document.getElementById('voiceIndicator').classList.add('listening');
+
+                    try {
+                        recognition.start();
+                        showMessage('Voice typing enabled! Click on any text field to start dictating.', 'success');
+                        setupVoiceInputs();
+                    } catch (e) {
+                        console.log('Recognition already started');
+                    }
+                } catch (error) {
+                    console.error('Microphone permission denied:', error);
+                    showMessage('Microphone permission denied. Please allow microphone access to use voice typing.', 'error');
+                    toggle.checked = false;
+                    voiceEnabled = false;
                 }
             } else {
                 status.textContent = 'OFF';
