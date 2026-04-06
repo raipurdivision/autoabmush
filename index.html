@@ -6,6 +6,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -424,6 +426,11 @@
         }
 
         input[type="text"],
+        textarea {
+            text-transform: uppercase;
+        }
+
+        input[type="text"],
         input[type="time"],
         input[type="date"],
         input[type="file"],
@@ -467,6 +474,8 @@
             font-size: 12px;
             min-height: 60px;
             border: 1px solid #b3d9ff;
+            overflow-y: hidden;
+            resize: none;
         }
 
         .button-group {
@@ -1153,26 +1162,19 @@
             // Get Other Remarks
             const otherRemarks = document.getElementById('otherRemarks').value || '';
 
-            // Add Other Remarks if any with outlined box
+            // Add Other Remarks if any (no box)
             doc.setFontSize(10);
             doc.setFont(undefined, 'bold');
             doc.text('Other Remarks if any:', 14, yPosition);
 
-            // Draw outlined box for Other Remarks
-            const boxHeight = 15;
-            const boxWidth = 180;
-            doc.setDrawColor(74, 144, 226);
-            doc.setLineWidth(0.5);
-            doc.rect(14, yPosition + 2, boxWidth, boxHeight);
-
-            // Add text inside the box
             if (otherRemarks) {
                 doc.setFont(undefined, 'normal');
-                const splitOtherRemarks = doc.splitTextToSize(otherRemarks, boxWidth - 4);
-                doc.text(splitOtherRemarks, 16, yPosition + 7);
+                const splitOtherRemarks = doc.splitTextToSize(otherRemarks, 180);
+                doc.text(splitOtherRemarks, 14, yPosition + 7);
+                yPosition += (splitOtherRemarks.length * 5) + 12;
+            } else {
+                yPosition += 12;
             }
-
-            yPosition += boxHeight + 12;
 
             // Get CLI Name, Date, and Signature
             const cliName = document.getElementById('cliName').value || '';
@@ -1300,6 +1302,7 @@
                     document.getElementById('place').value = draftData.place || '';
                     document.getElementById('speedGun').value = draftData.speedGun || '';
                     document.getElementById('otherRemarks').value = draftData.otherRemarks || '';
+                    autoResizeTextarea(document.getElementById('otherRemarks'));
                     document.getElementById('formDate').value = draftData.formDate || '';
                     document.getElementById('cliName').value = draftData.cliName || '';
 
@@ -1379,7 +1382,7 @@
                         const textBefore = currentValue.substring(0, cursorPos);
                         const textAfter = currentValue.substring(cursorPos);
 
-                        currentInput.value = textBefore + finalTranscript + textAfter;
+                        currentInput.value = textBefore + finalTranscript.toUpperCase() + textAfter;
 
                         // Move cursor to end of inserted text
                         const newCursorPos = textBefore.length + finalTranscript.length;
@@ -1586,6 +1589,24 @@
                 }
             }, true);
         });
+
+        // Auto-resize for Other Remarks textarea
+        function autoResizeTextarea(el) {
+            el.style.height = 'auto';
+            el.style.height = el.scrollHeight + 'px';
+        }
+
+        // Attach auto-resize after DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const remarksTA = document.getElementById('otherRemarks');
+            if (remarksTA) {
+                remarksTA.addEventListener('input', function() {
+                    autoResizeTextarea(this);
+                });
+            }
+        });
+
+        // Also patch handleDraftUpload to resize after loading draft
     </script>
 </body>
 </html>
