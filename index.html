@@ -1,5 +1,10 @@
 
 
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +17,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: linear-gradient(135deg, #add8e6 0%, #87ceeb 100%);
+            background: linear-gradient(135deg, #b1d5e6 0%, #87ceeb 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
             min-height: 100vh;
@@ -21,7 +26,7 @@
         .container {
             max-width: 1120px;
             margin: 0 auto;
-            background: rgb(79, 126, 117);
+            background: rgb(138,201,241);
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             overflow: hidden;
@@ -30,8 +35,8 @@
         .header {
             background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
             color: white;
-            padding: 30px;
-            text-align: center;
+            border-bottom: 4px solid #FFD700;
+            padding: 12px 20px;
             position: relative;
         }
          .h3 {
@@ -42,19 +47,24 @@
             position: relative;
         }
 
-        .header h1 { font-size: 2.5em; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 10px; }
-        .header h2 { font-size: 1.5em; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); margin-top: 0; }
-
-        .header-content { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .header-inner { display: flex; align-items: center; gap: 16px; }
+        .header-logo img { height: 80px; width: 80px; object-fit: contain; border-radius: 50%; border: 3px solid #FFD700; background: #fff; padding: 2px; }
+        .header-text { text-align: center; flex: 1; }
+        .header-text h1 { font-size: 1.55em; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 2px; }
+        .header-text h2 { font-size: 1em; font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px; color: #FFD700; margin-top: 2px; }
+        .header-text h3 { font-size: 0.85em; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #FFD700; opacity: 0.88; margin-top: 2px; }
+        .header-controls { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+        .toggle-row { display: flex; align-items: center; gap: 6px; }
+        .toggle-label { color: #fff; font-size: 0.82em; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,.3); }
         .voice-toggle-container { display: flex; align-items: center; gap: 10px; }
         .mobile-toggle-container { display: flex; align-items: center; gap: 10px; }
         .mobile-toggle-label { color: white; font-size: 0.85em; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
 
         body.mobile-view .container { max-width: 100%; margin: 0; border-radius: 0; }
         body.mobile-view { padding: 0; }
-        body.mobile-view .header h1 { font-size: 1.3em; }
-        body.mobile-view .header h2 { font-size: 0.9em; }
-        body.mobile-view .header-content { flex-direction: column; gap: 10px; }
+        body.mobile-view .header-text h1 { font-size: 1.2em; }
+        body.mobile-view .header-text h2 { font-size: 0.85em; }
+        body.mobile-view .header-inner { flex-direction: column; gap: 10px; }
         body.mobile-view .form-container { padding: 15px; }
         body.mobile-view .info-fields { flex-direction: column; gap: 10px; }
         body.mobile-view .info-field { flex: 1 1 100%; }
@@ -88,9 +98,9 @@
         .mic-icon.active { color: #e74c3c; animation: micPulse 1s infinite; }
         @keyframes micPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        .form-container { padding: 30px; background: #a6b5b5; }
+        .form-container { padding: 28px; background: #e4e7e7; }
 
-        .info-section { background: rgb(255, 255, 255); padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .info-section { background: rgb(212,220,218); padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .info-section h2 { font-size: 1.2em; font-weight: bold; color: #2c3e50; margin-bottom: 15px; text-align: center; }
 
         .info-fields { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 15px; flex-wrap: wrap; }
@@ -107,7 +117,7 @@
         .table-wrapper { overflow-x: auto; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 
         table { width: 100%; border-collapse: collapse; background: white; }
-        thead { background: linear-gradient(135deg, #5b9dd9 0%, #4a8ec2 100%); color: white; }
+        thead { background: linear-gradient(135deg, #1a237e 0%, #4a8ec2 100%); color: white; }
         th { padding: 15px 10px; text-align: center; font-weight: bold; font-size: 12px; border: 2px solid #3a7ca5; text-transform: uppercase; }
         tbody tr { transition: background-color 0.3s; }
         tbody tr:nth-child(odd) { background-color: #f0f8ff; }
@@ -215,9 +225,39 @@
 
         #draftFileInput { display: none; }
 
-        .message { display: none; margin-top: 20px; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; }
-        .message.success { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
-        .message.error { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
+        /* ── Centered toast overlay ── */
+        .message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 99999;
+            min-width: 320px;
+            max-width: 90vw;
+            padding: 24px 36px;
+            border-radius: 14px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.15em;
+            letter-spacing: 0.3px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+            animation: fadeInScale 0.25s ease;
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.85); }
+            to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        .message.success { background: #d4edda; color: #155724; border: 3px solid #28a745; }
+        .message.error   { background: #f8d7da; color: #721c24; border: 3px solid #dc3545; }
+        /* dim backdrop when message is showing */
+        .message-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+            z-index: 99998;
+        }
 
         /* Zoom Overlay */
         .zoom-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; }
@@ -233,11 +273,9 @@
         .zoom-done-btn:hover { background: #229954; }
 
         @media (max-width: 768px) {
-            .header h1 { font-size: 1.5em; }
-            .header h2 { font-size: 1em; }
-            .header-content { flex-direction: column; align-items: center; gap: 10px; }
-            .voice-toggle-container { flex-direction: row; gap: 8px; }
-            .voice-toggle-label { font-size: 0.7em; }
+            .header-text h1 { font-size: 1.2em; }
+            .header-inner { flex-direction: column; text-align: center; }
+            .header-controls { align-items: center; }
             .button-group { flex-direction: column; }
             button { width: 100%; }
             .dual-sig-section { flex-direction: column; }
@@ -260,27 +298,34 @@
 
     <div class="container">
         <div class="header">
-            <h2>Conducted Ambush Check in Auto Signalling Section</h2>
-            <h3>Raipur Division</h3>
-            <div class="header-content">
-                <div class="mobile-toggle-container">
-                    <span class="mobile-toggle-label">📱 Mobile View</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="mobileToggle" onchange="toggleMobileView()">
-                        <span class="slider"></span>
-                    </label>
+            <div class="header-inner">
+                <div class="header-logo">
+                    <img id="railLogo" src="data:image/png;base64,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" alt="Indian Railways">
                 </div>
-                <div class="voice-toggle-container">
-                    <span class="voice-toggle-label">🎤 Voice</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="voiceToggle" onchange="toggleVoiceTyping()">
-                        <span class="slider"></span>
-                    </label>
-                    <span class="voice-status" id="voiceStatus">OFF</span>
-                    <span class="voice-indicator" id="voiceIndicator">
-                        <span>🎤</span>
-                        <span class="listening-text">Listening</span>
-                    </span>
+                <div class="header-text">
+                    <h1>Conducted Ambush Check in Auto Signalling Section</h1>
+                    <h2>Raipur Division</h2>
+                    <h3>Speed Gun Check — Auto Signalling Section</h3>
+                </div>
+                <div class="header-controls">
+                    <div class="toggle-row">
+                        <span class="toggle-label">📱 Mobile</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="mobileToggle" onchange="toggleMobileView()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-row">
+                        <span class="toggle-label">🎤 Voice</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="voiceToggle" onchange="toggleVoiceTyping()">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="voice-status" id="voiceStatus">OFF</span>
+                        <span class="voice-indicator" id="voiceIndicator">
+                            <span>🎤</span><span class="listening-text">Listening</span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -425,8 +470,8 @@
                         <option value="S. C. RAI/CLI/BIA">S. C. RAI/CLI/BIA</option>
                         <option value="S. K. SINGH/CLI/BIA">S. K. SINGH/CLI/BIA</option>
                         <option value="S. L. SONI/CLI/R">S. L. SONI/CLI/R</option>
-                        <option value="SANJAY KUMAR ROY/CLI/BIA">SANJAY KUMAR ROY/CLI/R</option>
-                        <option value="SANJAY SINGH/CLI/DRZ">SANJAY SINGH/CLI/DRZ</option>
+                        <option value="SANJAY KUMAR ROY/CLI/BIA">SANJAY KUMAR ROY/CLI/BIA</option>
+                        <option value="SANJAY SINGH/CLI/BYT">SANJAY SINGH/CLI/BYT</option>
                         <option value="SANJEEV KUMAR SHARMA/CLI/BIA">SANJEEV KUMAR SHARMA/CLI/BIA</option>
                         <option value="SANTOSH KUMAR PATKAR/CLI/BIA">SANTOSH KUMAR PATKAR/CLI/BIA</option>
                         <option value="SHAILENDRA SINGH/CLI/BIA">SHAILENDRA SINGH/CLI/BIA</option>
@@ -544,12 +589,14 @@
                 <button class="pdf-btn" onclick="generatePDF()">Generate PDF</button>
             </div>
 
+            <div class="message-backdrop" id="messageBackdrop"></div>
             <div id="message" class="message"></div>
         </div>
     </div>
 
     <script>
         let rowCount = 12;
+        let dataSubmitted = false;  // tracks whether form was successfully submitted
 
         /* ─── Dual signature preview ─── */
         function previewSig(event, previewId, imgId) {
@@ -585,55 +632,149 @@
             showMessage('Row added successfully!', 'success');
         }
 
-        function submitForm() {
+        // ── Google Apps Script Web App URL ──────────────────────
+        const SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7WDM2HP5ukVhVtQCS2fwdJ2BvKnv9xszb8gMMK273j90Njwb5_nmtfgikZSdGYReciw/exec";
+
+        async function submitForm() {
+            const place        = document.getElementById('place').value.trim();
+            const speedGun     = document.getElementById('speedGun').value.trim();
+            const date         = document.getElementById('formDate').value;
+            const cliName1     = document.getElementById('cliName1').value;
+            const cliName2     = document.getElementById('cliName2').value;
+            const otherRemarks = document.getElementById('otherRemarks').value.trim();
+
+            // Collect only non-empty rows from the table
             const rows = document.querySelectorAll('#tableBody tr');
-            const data = {
-                place: document.getElementById('place').value,
-                speedGun: document.getElementById('speedGun').value,
-                records: [],
-                otherRemarks: document.getElementById('otherRemarks').value,
-                date: document.getElementById('formDate').value,
-                cliName1: document.getElementById('cliName1').value,
-                cliName2: document.getElementById('cliName2').value
-            };
+            const records = [];
             rows.forEach((row, index) => {
-                const cells = row.querySelectorAll('input, textarea');
-                data.records.push({
-                    slNo: index + 1,
-                    locoNo: cells[0].value,
-                    trainNumber: cells[1].value,
-                    upDn: cells[2].value,
-                    signalName: cells[3].value,
-                    signalNumber: cells[4].value,
-                    time: cells[5].value,
-                    speed: cells[6].value,
-                    ruleFollowed: cells[7].value
-                });
+                const cells        = row.querySelectorAll('input, textarea');
+                const locoNo       = cells[0].value.trim();
+                const trainNumber  = cells[1].value.trim();
+                const upDn         = cells[2].value.trim();
+                const signalName   = cells[3].value.trim();
+                const signalNumber = cells[4].value.trim();
+                const time         = cells[5].value.trim();
+                const speed        = cells[6].value.trim();
+                const ruleFollowed = cells[7].value.trim();
+                if (locoNo || trainNumber) {
+                    records.push({
+                        slNo: index + 1,
+                        locoNo, trainNumber, upDn,
+                        signalName, signalNumber,
+                        time, speed, ruleFollowed
+                    });
+                }
             });
-            console.log('Form Data:', data);
-            showMessage('Form submitted successfully! Check console for data.', 'success');
+
+            if (!cliName1 && !cliName2) {
+                showMessage('⚠️ Please select at least one CLI Name and HQ before submitting.', 'error');
+                return;
+            }
+            if (records.length === 0) {
+                showMessage('⚠️ Please fill at least one row of train data before submitting.', 'error');
+                return;
+            }
+
+            showMessage('⏳ Submitting data to Google Sheet… please wait.', 'success');
+
+            // Send as URLSearchParams — avoids CORS preflight that blocks JSON+POST
+            const params = new URLSearchParams();
+            params.append("sheet",        "Auto Ambush");
+            params.append("place",        place);
+            params.append("speedGun",     speedGun);
+            params.append("date",         date);
+            params.append("cliName1",     cliName1);
+            params.append("cliName2",     cliName2);
+            params.append("otherRemarks", otherRemarks);
+            params.append("records",      JSON.stringify(records));
+
+            try {
+                await fetch(SHEET_SCRIPT_URL, {
+                    method:  "POST",
+                    mode:    "no-cors",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body:    params.toString()
+                });
+                // no-cors returns opaque response — we assume success if no network error
+                dataSubmitted = true;
+                showMessage('✅ Data submitted to Google Sheet! (' + records.length + ' train record(s) saved)', 'success');
+            } catch (err) {
+                showMessage('❌ Network error — check your internet connection. (' + err.message + ')', 'error');
+            }
         }
 
         /* ═══════════════════════════════
            PDF GENERATION — with dual signatures
         ═══════════════════════════════ */
         function generatePDF() {
+            if (!dataSubmitted) {
+                showMessage('⚠️ Please SUBMIT data first before generating PDF!', 'error');
+                return;
+            }
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('p', 'mm', 'a4');
             const pageWidth = doc.internal.pageSize.getWidth();
+            const mL = 12, mR = pageWidth - 12;
 
-            // Title
-            doc.setFontSize(14);
+            // ── PDF Header band ──
+            const headerH = 42;   // total height of blue band
+            doc.setFillColor(26, 35, 126);
+            doc.rect(0, 0, pageWidth, headerH, 'F');
+            doc.setDrawColor(255, 215, 0);
+            doc.setLineWidth(1.5);
+            doc.line(0, headerH, pageWidth, headerH);
+
+            // Logo — circular, left side vertically centred in header band
+            const logoSize = 18;
+            const logoX = mL;
+            const logoY = (headerH - logoSize) / 2;
+            const logoEl = document.getElementById('railLogo');
+            if (logoEl && logoEl.complete && logoEl.naturalWidth > 0) {
+                try {
+                    // Draw logo as circle using canvas clipping
+                    const cvs = document.createElement('canvas');
+                    const px = 200; // canvas size in pixels for sharpness
+                    cvs.width = px; cvs.height = px;
+                    const ctx = cvs.getContext('2d');
+                    // White circle background
+                    ctx.fillStyle = '#ffffff';
+                    ctx.beginPath();
+                    ctx.arc(px/2, px/2, px/2, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Clip to circle and draw image
+                    ctx.beginPath();
+                    ctx.arc(px/2, px/2, px/2, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.clip();
+                    ctx.drawImage(logoEl, 0, 0, px, px);
+                    const circularDataUrl = cvs.toDataURL('image/png');
+                    doc.addImage(circularDataUrl, 'PNG', logoX, logoY, logoSize, logoSize);
+                } catch(e) {
+                    // Fallback: draw a gold circle placeholder
+                    doc.setFillColor(255, 215, 0);
+                    doc.circle(logoX + logoSize/2, logoY + logoSize/2, logoSize/2, 'F');
+                }
+            } else {
+                // Image not ready: draw gold circle placeholder
+                doc.setFillColor(255, 215, 0);
+                doc.circle(logoX + logoSize/2, logoY + logoSize/2, logoSize/2, 'F');
+            }
+
+            // Title text — centred in band, logo width offset so text is truly centred on page
+            const textCentreX = pageWidth / 2;
             doc.setFont(undefined, 'bold');
-            doc.setTextColor(0, 51, 102);
-            doc.text('Conducted Ambush Check in Auto Signalling Section', pageWidth / 2, 15, { align: 'center' });
-
+            doc.setTextColor(255, 255, 255);
             doc.setFontSize(12);
-            doc.text('Raipur Division', pageWidth / 2, 23, { align: 'center' });
+            doc.text('CONDUCTED AMBUSH CHECK IN AUTO SIGNALLING SECTION', textCentreX, 14, { align: 'center' });
+            doc.setFontSize(9);
+            doc.setTextColor(255, 215, 0);
+            doc.text('RAIPUR DIVISION', textCentreX, 23, { align: 'center' });
+            doc.setFontSize(8);
+            doc.setTextColor(220, 220, 220);
+            doc.text('Speed Gun Check  |  Auto Signalling Section', textCentreX, 31, { align: 'center' });
 
-            doc.setDrawColor(0, 0, 0);
-            doc.setLineWidth(0.5);
-            doc.line(14, 26, pageWidth - 14, 26);
+            // ── Body content starts BELOW the header band ──
+            let y = headerH + 8;   // 50 mm from top — well clear of the band
 
             const place    = document.getElementById('place').value || '';
             const speedGun = document.getElementById('speedGun').value || '';
@@ -641,14 +782,19 @@
             doc.setTextColor(0, 0, 0);
             doc.setFontSize(10);
             doc.setFont(undefined, 'bold');
-            doc.text('PLACE - ' + place, 14, 35);
-            doc.text('SPEED GUN - ' + speedGun, 14, 42);
+            doc.text('PLACE : ' + place, mL, y);
+            y += 7;
+            doc.text('SPEED GUN : ' + speedGun, mL, y);
+            y += 8;
 
             doc.setFontSize(9);
-            doc.text('Ambush checking was carried out at following points by using speed gun in Auto.sig.section:', 14, 50);
+            doc.text('Ambush checking was carried out at following points by using speed gun in Auto Sig. section:', mL, y);
+            y += 6;
             doc.setFont(undefined, 'normal');
-            doc.text('1. Whether rules of Auto Signalling section are being followed by LP/ALP in case signal at danger.', 14, 56);
-            doc.text('2. Whether speed of the train after crossing the red signal was as per prescribed speed in G&SR.', 14, 62);
+            doc.text('1. Whether rules of Auto Signalling section are being followed by LP/ALP in case signal at danger.', mL, y);
+            y += 6;
+            doc.text('2. Whether speed of the train after crossing the red signal was as per prescribed speed in G&SR.', mL, y);
+            y += 8;
 
             // Table
             const rows = document.querySelectorAll('#tableBody tr');
@@ -672,7 +818,7 @@
             doc.autoTable({
                 head: [['Sl no.', 'Loco No', 'Train No', 'UP/DN', 'Signal Name', 'Signal No/Aspect', 'Time', 'Speed\n(km/h)', 'Rule Followed']],
                 body: tableData,
-                startY: 68,
+                startY: y,
                 theme: 'grid',
                 headStyles: { fillColor: [74,144,226], textColor: [255,255,255], fontStyle: 'bold', halign: 'center', fontSize: 7 },
                 styles: { fontSize: 6.5, cellPadding: 2, halign: 'center' },
@@ -749,8 +895,8 @@
 
                 doc.setFontSize(9);
                 doc.setFont(undefined, 'bold');
-                doc.text('Signature (CLI-1):', leftX, yPos);
-                doc.text('Signature (CLI-2):', rightX, yPos);
+                doc.text('Signature:', leftX, yPos);
+                doc.text('Signature:', rightX, yPos);
 
                 let sigY = yPos + 3;
 
@@ -809,10 +955,21 @@
 
         function showMessage(text, type) {
             const messageDiv = document.getElementById('message');
+            const backdrop   = document.getElementById('messageBackdrop');
             messageDiv.textContent = text;
             messageDiv.className = 'message ' + type;
             messageDiv.style.display = 'block';
-            setTimeout(() => { messageDiv.style.display = 'none'; }, 3000);
+            backdrop.style.display   = 'block';
+            // click anywhere to dismiss early
+            const dismiss = () => {
+                messageDiv.style.display = 'none';
+                backdrop.style.display   = 'none';
+                backdrop.removeEventListener('click', dismiss);
+                messageDiv.removeEventListener('click', dismiss);
+            };
+            backdrop.addEventListener('click', dismiss);
+            messageDiv.addEventListener('click', dismiss);
+            setTimeout(dismiss, 3500);
         }
 
         function saveDraft() {
