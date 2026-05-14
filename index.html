@@ -8,6 +8,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -364,9 +365,9 @@
                             <th style="width:30px;">Sl no.</th>
                             <th style="width:100px;">Loco No</th>
                             <th style="width:100px;">Train Number</th>
-                            <th style="width:100px;">UP/DN</th>
-                            <th style="width:120px;">Signal NAME</th>
-                            <th style="width:120px;">Signal Number/Aspect</th>
+                            <th style="width:100px;">LINE/DIRECTION</th>
+                            <th style="width:120px;">SIGNAL NAME/NO.</th>
+                            <th style="width:120px;">SIGNAL ASPECT</th>
                             <th style="width:80px;">Time</th>
                             <th style="width:80px;">Speed (km/h)</th>
                             <th style="width:120px;">Rule followed/Remarks</th>
@@ -374,18 +375,18 @@
                     </thead>
                     <tbody id="tableBody">
                         <!-- 12 default rows -->
-                        <tr><td class="row-number">1</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
-                        <tr><td class="row-number">2</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
-                        <tr><td class="row-number">3</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
-                        <tr><td class="row-number">4</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
-                        <tr><td class="row-number">5</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
-                        <tr><td class="row-number">6</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
-                        <tr><td class="row-number">7</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
-                        <tr><td class="row-number">8</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
-                        <tr><td class="row-number">9</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
-                        <tr><td class="row-number">10</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
-                        <tr><td class="row-number">11</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
-                        <tr><td class="row-number">12</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">1</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">2</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">3</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">4</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">5</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">6</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">7</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">8</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">9</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">10</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">11</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
+                        <tr><td class="row-number">12</td><td><input type="text"></td><td><input type="text"></td><td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td><td><input type="text"></td><td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td><td><input type="text"></td><td><input type="text"></td><td><textarea rows="2"></textarea></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -629,9 +630,9 @@
                 <td class="row-number">${rowCount}</td>
                 <td><input type="text"></td>
                 <td><input type="text"></td>
+                <td><select><option value="">--</option><option>UP</option><option>UP/MID</option><option>DN</option><option>DN/MID</option></select></td>
                 <td><input type="text"></td>
-                <td><input type="text"></td>
-                <td><input type="text"></td>
+                <td><select><option value="">--</option><option>Proceed</option><option>Attention</option><option>Caution</option><option>Danger</option><option>One Yellow</option><option>Double Yellow</option><option>Yellow with Looner</option><option>Green</option><option>On Approach</option></select></td>
                 <td><input type="text"></td>
                 <td><input type="text"></td>
                 <td><textarea rows="2"></textarea></td>
@@ -664,7 +665,7 @@
             const records = [];
             if (rows.length > 0) {
                 const firstRow = rows[0];
-                const cells        = firstRow.querySelectorAll('input, textarea');
+                const cells        = firstRow.querySelectorAll('input, select, textarea');
                 const locoNo       = cells[0].value.trim();
                 const trainNumber  = cells[1].value.trim();
                 const upDn         = cells[2].value.trim();
@@ -825,7 +826,7 @@
             const rows = document.querySelectorAll('#tableBody tr');
             const tableData = [];
             rows.forEach((row) => {
-                const cells = row.querySelectorAll('input, textarea');
+                const cells = row.querySelectorAll('input, select, textarea');
                 const rn = row.querySelector('.row-number').textContent;
                 tableData.push([
                     rn,
@@ -841,7 +842,7 @@
             });
 
             doc.autoTable({
-                head: [['Sl no.', 'Loco No', 'Train No', 'UP/DN', 'Signal Name', 'Signal No/Aspect', 'Time', 'Speed\n(km/h)', 'Rule Followed/Remarks']],
+                head: [['Sl no.', 'Loco No', 'Train No', 'Line/Direction', 'Signal Name/No.', 'Signal Aspect', 'Time', 'Speed\n(km/h)', 'Rule Followed/Remarks']],
                 body: tableData,
                 startY: y,
                 theme: 'grid',
@@ -996,7 +997,7 @@
             const rows = document.querySelectorAll('#tableBody tr');
             const tableData = [];
             rows.forEach((row) => {
-                const cells = row.querySelectorAll('input, textarea');
+                const cells = row.querySelectorAll('input, select, textarea');
                 tableData.push({
                     locoNo:       cells[0].value || '',
                     trainNumber:  cells[1].value || '',
@@ -1055,14 +1056,16 @@
                     rowCount = 0;
                     (d.tableData || []).forEach((row) => {
                         rowCount++;
+                        const upDnVal = row.upDn || '';
+                        const sigAspectVal = row.signalNumber || '';
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
                             <td class="row-number">${rowCount}</td>
                             <td><input type="text" value="${row.locoNo || ''}"></td>
                             <td><input type="text" value="${row.trainNumber || ''}"></td>
-                            <td><input type="text" value="${row.upDn || ''}"></td>
+                            <td><select><option value="">--</option><option${upDnVal==='UP'?' selected':''}>UP</option><option${upDnVal==='UP/MID'?' selected':''}>UP/MID</option><option${upDnVal==='DN'?' selected':''}>DN</option><option${upDnVal==='DN/MID'?' selected':''}>DN/MID</option></select></td>
                             <td><input type="text" value="${row.signalName || ''}"></td>
-                            <td><input type="text" value="${row.signalNumber || ''}"></td>
+                            <td><select><option value="">--</option><option${sigAspectVal==='Proceed'?' selected':''}>Proceed</option><option${sigAspectVal==='Attention'?' selected':''}>Attention</option><option${sigAspectVal==='Caution'?' selected':''}>Caution</option><option${sigAspectVal==='Danger'?' selected':''}>Danger</option><option${sigAspectVal==='One Yellow'?' selected':''}>One Yellow</option><option${sigAspectVal==='Double Yellow'?' selected':''}>Double Yellow</option><option${sigAspectVal==='Yellow with Looner'?' selected':''}>Yellow with Looner</option><option${sigAspectVal==='Green'?' selected':''}>Green</option><option${sigAspectVal==='On Approach'?' selected':''}>On Approach</option></select></td>
                             <td><input type="text" value="${row.time || ''}"></td>
                             <td><input type="text" value="${row.speed || ''}"></td>
                             <td><textarea rows="2">${row.ruleFollowed || ''}</textarea></td>
