@@ -10,6 +10,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -661,12 +662,11 @@
             const cliName2     = document.getElementById('cliName2').value;
             const otherRemarks = document.getElementById('otherRemarks').value.trim();
 
-            // Collect ONLY the first row (Train No, Loco No, etc.)
+            // Collect ALL filled rows (Train No, Loco No, etc.)
             const rows = document.querySelectorAll('#tableBody tr');
             const records = [];
-            if (rows.length > 0) {
-                const firstRow = rows[0];
-                const cells        = firstRow.querySelectorAll('input, select, textarea');
+            rows.forEach((row, idx) => {
+                const cells        = row.querySelectorAll('input, select, textarea');
                 const locoNo       = cells[0].value.trim();
                 const trainNumber  = cells[1].value.trim();
                 const upDn         = cells[2].value.trim();
@@ -675,15 +675,15 @@
                 const time         = cells[5].value.trim();
                 const speed        = cells[6].value.trim();
                 const ruleFollowed = cells[7].value.trim();
-                if (locoNo || trainNumber) {
+                if (locoNo || trainNumber || signalName || speed) {
                     records.push({
-                        slNo: 1,
+                        slNo: idx + 1,
                         locoNo, trainNumber, upDn,
                         signalName, signalNumber,
                         time, speed, ruleFollowed
                     });
                 }
-            }
+            });
 
             if (!cliName1 && !cliName2) {
                 showMessage('⚠️ Please select at least one CLI Name and HQ before submitting.', 'error');
@@ -696,7 +696,10 @@
 
             showMessage('⏳ Submitting data to Google Sheet… please wait.', 'success');
 
-            // Send as URLSearchParams — avoids CORS preflight that blocks JSON+POST
+            const submitBtn = document.querySelector('.submit-btn');
+            if (submitBtn) submitBtn.disabled = true;
+
+            // Send all records in one POST — Apps Script forEach handles each row
             const params = new URLSearchParams();
             params.append("sheet",        "Auto Ambush");
             params.append("sectionType",  sectionType);
@@ -715,10 +718,10 @@
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
                     body:    params.toString()
                 });
-                // no-cors returns opaque response — we assume success if no network error
                 dataSubmitted = true;
-                showMessage('✅ Data submitted to Google Sheet! (' + records.length + ' train record(s) saved)', 'success');
+                showMessage('✅ Data submitted! ' + records.length + ' row(s) saved to Google Sheet.', 'success');
             } catch (err) {
+                if (submitBtn) submitBtn.disabled = false;
                 showMessage('❌ Network error — check your internet connection. (' + err.message + ')', 'error');
             }
         }
