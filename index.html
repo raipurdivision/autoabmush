@@ -12,6 +12,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -619,9 +620,11 @@
             <input type="file" id="draftFileInput" accept=".json" onchange="handleDraftUpload(event)">
 
             <div id="message" class="message"></div>
+            <div id="autosaveIndicator" style="font-size:11px;color:#888;text-align:right;margin:2px 4px;opacity:0.5;transition:opacity 0.4s;">&nbsp;</div>
             <div class="button-group">
                 <button class="save-draft-btn" onclick="saveDraft()">Save Draft</button>
                 <button class="upload-draft-btn" onclick="document.getElementById('draftFileInput').click()">Upload Draft</button>
+                <button class="save-draft-btn" style="background:linear-gradient(135deg,#c0392b 0%,#922b21 100%);" onclick="if(confirm('Clear the auto-saved draft? This does not affect the fields currently on screen.')) clearAutosavedDraft();">Clear Auto-Draft</button>
                 <button class="submit-btn" onclick="submitForm()">Submit</button>
                 <button class="pdf-btn" onclick="generatePDF()">Generate PDF</button>
             </div>
@@ -631,7 +634,7 @@
 
     <script>
         let rowCount = 12;
-        let dataSubmitted = false;  // tracks whether form was successfully submitted
+        let dataSubmitted = false;  // tracks whether AT LEAST ONE successful submission has happened (used to gate PDF generation)
 
         /* ─── Dual signature preview ─── */
         function previewSig(event, previewId, imgId) {
@@ -681,12 +684,6 @@
         const SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7WDM2HP5ukVhVtQCS2fwdJ2BvKnv9xszb8gMMK273j90Njwb5_nmtfgikZSdGYReciw/exec";
 
         async function submitForm() {
-            // ── Block re-submission ──
-            if (dataSubmitted) {
-                showMessage('⚠️ DATA ALREADY SUBMITTED!', 'error');
-                return;
-            }
-
             const place        = document.getElementById('place').value.trim();
             const speedGun     = document.getElementById('speedGun').value.trim();
             const sectionType  = document.getElementById('sectionType').value;
@@ -695,10 +692,12 @@
             const cliName2     = document.getElementById('cliName2').value;
             const otherRemarks = document.getElementById('otherRemarks').value.trim();
 
-            // Collect ALL filled rows (Train No, Loco No, etc.)
+            // Collect only rows NOT already submitted, that have data filled in
             const rows = document.querySelectorAll('#tableBody tr');
             const records = [];
+            const rowsToLock = [];
             rows.forEach((row, idx) => {
+                if (row.dataset.submitted === '1') return; // already saved earlier — skip, avoids duplicates
                 const cells        = row.querySelectorAll('input, select, textarea');
                 const locoNo       = cells[0].value.trim();
                 const trainNumber  = cells[1].value.trim();
@@ -715,6 +714,7 @@
                         signalName, signalNumber,
                         time, speed, ruleFollowed
                     });
+                    rowsToLock.push(row);
                 }
             });
 
@@ -723,7 +723,9 @@
                 return;
             }
             if (records.length === 0) {
-                showMessage('⚠️ Please fill at least one row of train data before submitting.', 'error');
+                showMessage(dataSubmitted
+                    ? 'ℹ️ No NEW rows to submit — add a new row with data first.'
+                    : '⚠️ Please fill at least one row of train data before submitting.', 'error');
                 return;
             }
 
@@ -732,7 +734,7 @@
             const submitBtn = document.querySelector('.submit-btn');
             if (submitBtn) submitBtn.disabled = true;
 
-            // Send all records in one POST — Apps Script forEach handles each row
+            // Send only the NEW records in one POST — Apps Script forEach handles each row
             const params = new URLSearchParams();
             params.append("sheet",        "Auto Ambush");
             params.append("sectionType",  sectionType);
@@ -752,10 +754,18 @@
                     body:    params.toString()
                 });
                 dataSubmitted = true;
-                showMessage('✅ Data submitted! ' + records.length + ' row(s) saved to Google Sheet.', 'success');
+                try { localStorage.removeItem(AUTOSAVE_KEY); } catch (e) {}
+                // Lock the rows that were just submitted so they can never be sent again
+                rowsToLock.forEach(row => {
+                    row.dataset.submitted = '1';
+                    row.style.opacity = '0.6';
+                    row.querySelectorAll('input, select, textarea').forEach(el => el.disabled = true);
+                });
+                showMessage('✅ Data submitted! ' + records.length + ' NEW row(s) saved to Google Sheet.', 'success');
             } catch (err) {
-                if (submitBtn) submitBtn.disabled = false;
                 showMessage('❌ Network error — check your internet connection. (' + err.message + ')', 'error');
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
             }
         }
 
@@ -887,14 +897,14 @@
                 styles: { fontSize: 8.5, cellPadding: 2, halign: 'center' },
                 columnStyles: {
                     0: { cellWidth: 10 },
-                    1: { cellWidth: 18 },
+                    1: { cellWidth: 24 },
                     2: { cellWidth: 20 },
-                    3: { cellWidth: 14 },
+                    3: { cellWidth: 20 },
                     4: { cellWidth: 24 },
                     5: { cellWidth: 24 },
                     6: { cellWidth: 16 },
                     7: { cellWidth: 16 },
-                    8: { cellWidth: 38 }
+                    8: { cellWidth: 26 }
                 },
                 alternateRowStyles: { fillColor: [240,248,255] }
             });
@@ -953,8 +963,8 @@
                 // LEFT signature box (x ~ 14)
                 const leftX  = 14;
                 const rightX = pageWidth / 2 + 5;
-                const sigW   = 45;
-                const sigH   = 18;
+                const sigW   = 22.5;
+                const sigH   = 9;
 
                 doc.setFontSize(9);
                 doc.setFont(undefined, 'bold');
@@ -966,9 +976,7 @@
                 if (sig1Data) {
                     doc.addImage(sig1Data, 'PNG', leftX, sigY, sigW, sigH);
                 } else {
-                    // Draw placeholder box
-                    doc.setDrawColor(180, 180, 180);
-                    doc.rect(leftX, sigY, sigW, sigH);
+                    // Placeholder (no border box)
                     doc.setFontSize(7);
                     doc.setFont(undefined, 'italic');
                     doc.setTextColor(150, 150, 150);
@@ -979,8 +987,7 @@
                 if (sig2Data) {
                     doc.addImage(sig2Data, 'PNG', rightX, sigY, sigW, sigH);
                 } else {
-                    doc.setDrawColor(180, 180, 180);
-                    doc.rect(rightX, sigY, sigW, sigH);
+                    // Placeholder (no border box)
                     doc.setFontSize(7);
                     doc.setFont(undefined, 'italic');
                     doc.setTextColor(150, 150, 150);
@@ -1030,7 +1037,7 @@
             setTimeout(dismiss, 3500);
         }
 
-        function saveDraft() {
+        function buildDraftData() {
             const rows = document.querySelectorAll('#tableBody tr');
             const tableData = [];
             rows.forEach((row) => {
@@ -1046,7 +1053,7 @@
                     ruleFollowed: cells[7].value || ''
                 });
             });
-            const draftData = {
+            return {
                 sectionType: document.getElementById('sectionType').value || 'AUTO',
                 place:     document.getElementById('place').value || '',
                 speedGun:  document.getElementById('speedGun').value || '',
@@ -1057,6 +1064,46 @@
                 cliName2:  document.getElementById('cliName2').value || '',
                 rowCount
             };
+        }
+
+        function restoreDraftData(d) {
+            document.getElementById('place').value        = d.place || '';
+            if (d.sectionType) {
+                document.getElementById('sectionType').value = d.sectionType;
+                handleSectionTypeChange();
+            }
+            document.getElementById('speedGun').value     = d.speedGun || '';
+            document.getElementById('otherRemarks').value = d.otherRemarks || '';
+            autoResizeTextarea(document.getElementById('otherRemarks'));
+            document.getElementById('formDate').value     = d.formDate || '';
+            document.getElementById('cliName1').value     = d.cliName1 || '';
+            document.getElementById('cliName2').value     = d.cliName2 || '';
+
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            rowCount = 0;
+            (d.tableData || []).forEach((row) => {
+                rowCount++;
+                const upDnVal = row.upDn || '';
+                const sigAspectVal = row.signalNumber || '';
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="row-number">${rowCount}</td>
+                    <td><input type="text" value="${row.locoNo || ''}"></td>
+                    <td><input type="text" value="${row.trainNumber || ''}"></td>
+                    <td><select><option value="">--</option><option${upDnVal==='UP'?' selected':''}>UP</option><option${upDnVal==='UP/MID'?' selected':''}>UP/MID</option><option${upDnVal==='DN'?' selected':''}>DN</option><option${upDnVal==='DN/MID'?' selected':''}>DN/MID</option></select></td>
+                    <td><input type="text" value="${row.signalName || ''}"></td>
+                    <td><select><option value="">--</option><option${sigAspectVal==='Danger'?' selected':''}>Danger</option><option${sigAspectVal==='One Yellow'?' selected':''}>One Yellow</option><option${sigAspectVal==='Double Yellow'?' selected':''}>Double Yellow</option><option${sigAspectVal==='Yellow with Looner'?' selected':''}>Yellow with Looner</option><option${sigAspectVal==='Green'?' selected':''}>Green</option><option${sigAspectVal==='On Approach'?' selected':''}>On Approach</option></select></td>
+                    <td><input type="text" value="${row.time || ''}"></td>
+                    <td><input type="text" value="${row.speed || ''}"></td>
+                    <td><textarea rows="2">${row.ruleFollowed || ''}</textarea></td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function saveDraft() {
+            const draftData = buildDraftData();
             const blob = new Blob([JSON.stringify(draftData, null, 2)], { type: 'application/json' });
             const url  = URL.createObjectURL(blob);
             const a    = document.createElement('a');
@@ -1076,39 +1123,7 @@
             reader.onload = function(e) {
                 try {
                     const d = JSON.parse(e.target.result);
-                    document.getElementById('place').value        = d.place || '';
-                    if (d.sectionType) {
-                        document.getElementById('sectionType').value = d.sectionType;
-                        handleSectionTypeChange();
-                    }
-                    document.getElementById('speedGun').value     = d.speedGun || '';
-                    document.getElementById('otherRemarks').value = d.otherRemarks || '';
-                    autoResizeTextarea(document.getElementById('otherRemarks'));
-                    document.getElementById('formDate').value     = d.formDate || '';
-                    document.getElementById('cliName1').value     = d.cliName1 || '';
-                    document.getElementById('cliName2').value     = d.cliName2 || '';
-
-                    const tableBody = document.getElementById('tableBody');
-                    tableBody.innerHTML = '';
-                    rowCount = 0;
-                    (d.tableData || []).forEach((row) => {
-                        rowCount++;
-                        const upDnVal = row.upDn || '';
-                        const sigAspectVal = row.signalNumber || '';
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td class="row-number">${rowCount}</td>
-                            <td><input type="text" value="${row.locoNo || ''}"></td>
-                            <td><input type="text" value="${row.trainNumber || ''}"></td>
-                            <td><select><option value="">--</option><option${upDnVal==='UP'?' selected':''}>UP</option><option${upDnVal==='UP/MID'?' selected':''}>UP/MID</option><option${upDnVal==='DN'?' selected':''}>DN</option><option${upDnVal==='DN/MID'?' selected':''}>DN/MID</option></select></td>
-                            <td><input type="text" value="${row.signalName || ''}"></td>
-                            <td><select><option value="">--</option><option${sigAspectVal==='Danger'?' selected':''}>Danger</option><option${sigAspectVal==='One Yellow'?' selected':''}>One Yellow</option><option${sigAspectVal==='Double Yellow'?' selected':''}>Double Yellow</option><option${sigAspectVal==='Yellow with Looner'?' selected':''}>Yellow with Looner</option><option${sigAspectVal==='Green'?' selected':''}>Green</option><option${sigAspectVal==='On Approach'?' selected':''}>On Approach</option></select></td>
-                            <td><input type="text" value="${row.time || ''}"></td>
-                            <td><input type="text" value="${row.speed || ''}"></td>
-                            <td><textarea rows="2">${row.ruleFollowed || ''}</textarea></td>
-                        `;
-                        tableBody.appendChild(tr);
-                    });
+                    restoreDraftData(d);
                     showMessage('Draft uploaded successfully!', 'success');
                 } catch (err) {
                     showMessage('Error loading draft file. Please check the file format.', 'error');
@@ -1117,6 +1132,54 @@
             reader.readAsText(file);
             event.target.value = '';
         }
+
+        /* ─── Auto-save (localStorage, debounced) ─── */
+        const AUTOSAVE_KEY = 'autoAmbush_autosave_v1';
+        let autosaveTimer = null;
+
+        function autosaveDraft() {
+            try {
+                const draftData = buildDraftData();
+                localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(draftData));
+                const indicator = document.getElementById('autosaveIndicator');
+                if (indicator) {
+                    indicator.textContent = 'Draft auto-saved ' + new Date().toLocaleTimeString('en-IN');
+                    indicator.style.opacity = '1';
+                    clearTimeout(indicator._fadeTimer);
+                    indicator._fadeTimer = setTimeout(() => { indicator.style.opacity = '0.5'; }, 2000);
+                }
+            } catch (err) {
+                // localStorage unavailable/full — silently skip
+            }
+        }
+
+        function scheduleAutosave() {
+            clearTimeout(autosaveTimer);
+            autosaveTimer = setTimeout(autosaveDraft, 800);
+        }
+
+        function restoreAutosavedDraft(silent) {
+            let saved;
+            try {
+                saved = localStorage.getItem(AUTOSAVE_KEY);
+            } catch (err) {
+                return;
+            }
+            if (!saved) return;
+            try {
+                const d = JSON.parse(saved);
+                restoreDraftData(d);
+                if (!silent) showMessage('Previous unsaved draft restored.', 'success');
+            } catch (err) {
+                localStorage.removeItem(AUTOSAVE_KEY);
+            }
+        }
+
+        function clearAutosavedDraft() {
+            try { localStorage.removeItem(AUTOSAVE_KEY); } catch (err) {}
+            showMessage('Auto-saved draft cleared.', 'success');
+        }
+
 
         /* ─── Voice Typing ─── */
         let recognition = null;
@@ -1262,6 +1325,20 @@
                     handleInputFocus(event);
                 }
             }, true);
+
+            // Restore any auto-saved draft from a previous session
+            restoreAutosavedDraft(false);
+
+            // Auto-save on any form edit (debounced), covers dynamically-added table rows via delegation
+            const formContainer = document.querySelector('.container') || document.body;
+            formContainer.addEventListener('input', function(event) {
+                if (event.target.id === 'sig1Upload' || event.target.id === 'sig2Upload') return;
+                scheduleAutosave();
+            });
+            formContainer.addEventListener('change', function(event) {
+                if (event.target.id === 'sig1Upload' || event.target.id === 'sig2Upload') return;
+                scheduleAutosave();
+            });
         });
     </script>
 </body>
