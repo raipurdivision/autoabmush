@@ -13,6 +13,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -212,24 +213,47 @@
 
         /* ════════════════════ */
 
-        .button-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .button-group { display: flex; gap: 10px; justify-content: center; flex-wrap: nowrap; margin-top: 20px; background: #e1e5e6; padding: 12px 14px; border-radius: 10px; }
 
         button { padding: 12px 30px; font-size: 1em; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-        .add-row-btn { background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: white; }
-        .add-row-btn:hover { background: linear-gradient(135deg, #229954 0%, #1e8449 100%); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+        /* ── Glossy black action buttons (coloured text + coloured bottom edge) ── */
+        .gbtn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 7px 13px; font-size: 0.78em; font-weight: 800; letter-spacing: 0.6px;
+            text-transform: uppercase; white-space: nowrap;
+            color: var(--c);
+            background: linear-gradient(180deg, #232323 0%, #000 100%);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-bottom: 3px solid var(--c);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14);
+            transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+        }
+        .gbtn .ico { font-size: 1.1em; line-height: 1; }
+        .gbtn:hover { transform: translateY(-2px); filter: brightness(1.2); box-shadow: 0 8px 16px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.18); }
+        .gbtn:active { transform: translateY(1px); box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+        .gbtn:disabled { opacity: .5; cursor: not-allowed; transform: none; filter: none; }
+        .gb-purple { --c: #c084fc; }
+        .gb-teal   { --c: #2de2b3; }
+        .gb-blue   { --c: #4da3ff; }
+        .gb-orange { --c: #ffa03c; }
+        .gb-red    { --c: #ff5a5a; }
+        .gb-green  { --c: #4cd964; }
 
-        .submit-btn { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; }
-        .submit-btn:hover { background: linear-gradient(135deg, #2980b9 0%, #21618c 100%); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
-
-        .pdf-btn { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); color: white; }
-        .pdf-btn:hover { background: linear-gradient(135deg, #d35400 0%, #ba4a00 100%); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
-
-        .save-draft-btn { background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); color: white; }
-        .save-draft-btn:hover { background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
-
-        .upload-draft-btn { background: linear-gradient(135deg, #16a085 0%, #138d75 100%); color: white; }
-        .upload-draft-btn:hover { background: linear-gradient(135deg, #138d75 0%, #117a65 100%); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+        /* ── SAVING overlay (shown from Submit until data is saved) ── */
+        .save-overlay { display: none; position: fixed; inset: 0; background: rgba(10,20,30,0.55); backdrop-filter: blur(2px); z-index: 10000; align-items: center; justify-content: center; padding: 16px; }
+        .save-overlay.active { display: flex; }
+        .save-card { background: #fff; border-radius: 22px; padding: 36px 40px 32px; text-align: center; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.35); animation: savePop .25s ease; }
+        @keyframes savePop { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+        .save-ring { position: relative; width: 110px; height: 110px; margin: 0 auto 26px; }
+        .save-ring::before { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 8px solid #d8f2df; }
+        .save-ring::after  { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 8px solid transparent; border-top-color: #1e9e45; animation: saveSpin 1s linear infinite; }
+        @keyframes saveSpin { to { transform: rotate(360deg); } }
+        .save-hand { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 48px; transform-origin: 60% 85%; animation: saveWave 1.4s ease-in-out infinite; }
+        @keyframes saveWave { 0%,100% { transform: rotate(0deg); } 25% { transform: rotate(14deg); } 75% { transform: rotate(-14deg); } }
+        .save-title { color: #1a9c3e; font-size: 1.45em; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; }
+        .save-sub { color: #15803d; font-weight: 700; margin-top: 10px; font-size: 1.05em; }
 
         #draftFileInput { display: none; }
 
@@ -279,9 +303,28 @@
             .dual-sig-section { flex-direction: column; }
             .sig-box { flex: 1 1 100%; }
         }
+
+        /* ── Keep all action buttons in ONE row on small screens too ── */
+        @media (max-width: 768px) {
+            .button-group { flex-direction: row; flex-wrap: nowrap; gap: 5px; padding: 10px 6px; }
+            .gbtn { flex: 1 1 0; width: auto; min-width: 0; flex-direction: column; gap: 2px; padding: 6px 2px; font-size: 0.56em; letter-spacing: 0; white-space: normal; text-align: center; line-height: 1.15; }
+            .gbtn .ico { font-size: 1.6em; }
+        }
+        body.mobile-view .button-group { flex-direction: row; flex-wrap: nowrap; gap: 5px; padding: 10px 6px; }
+        body.mobile-view .gbtn { flex: 1 1 0; width: auto; min-width: 0; flex-direction: column; gap: 2px; padding: 6px 2px; font-size: 0.56em; letter-spacing: 0; white-space: normal; text-align: center; line-height: 1.15; }
+        body.mobile-view .gbtn .ico { font-size: 1.6em; }
     </style>
 </head>
 <body>
+    <!-- Saving overlay -->
+    <div class="save-overlay" id="saveOverlay" role="alert" aria-live="assertive">
+        <div class="save-card">
+            <div class="save-ring"><div class="save-hand">✋</div></div>
+            <div class="save-title">⏳ Please wait — data saving...</div>
+            <div class="save-sub">Do not close or refresh this page</div>
+        </div>
+    </div>
+
     <!-- Zoom Overlay for Mobile View -->
     <div class="zoom-overlay" id="zoomOverlay">
         <div class="zoom-input-container">
@@ -396,7 +439,7 @@
             </div>
 
             <div class="button-group" style="margin-top:20px;margin-bottom:20px;">
-                <button class="add-row-btn" onclick="addRow()">+ Add Row</button>
+                <button class="gbtn gb-green add-row-btn" onclick="addRow()"><span class="ico">➕</span> Add Row</button>
             </div>
 
             <div class="remarks-section">
@@ -622,11 +665,11 @@
             <div id="message" class="message"></div>
             <div id="autosaveIndicator" style="font-size:11px;color:#888;text-align:right;margin:2px 4px;opacity:0.5;transition:opacity 0.4s;">&nbsp;</div>
             <div class="button-group">
-                <button class="save-draft-btn" onclick="saveDraft()">Save Draft</button>
-                <button class="upload-draft-btn" onclick="document.getElementById('draftFileInput').click()">Upload Draft</button>
-                <button class="save-draft-btn" style="background:linear-gradient(135deg,#c0392b 0%,#922b21 100%);" onclick="if(confirm('Clear the auto-saved draft? This does not affect the fields currently on screen.')) clearAutosavedDraft();">Clear Auto-Draft</button>
-                <button class="submit-btn" onclick="submitForm()">Submit</button>
-                <button class="pdf-btn" onclick="generatePDF()">Generate PDF</button>
+                <button class="gbtn gb-purple save-draft-btn" onclick="saveDraft()"><span class="ico">💾</span> Save Draft</button>
+                <button class="gbtn gb-teal upload-draft-btn" onclick="document.getElementById('draftFileInput').click()"><span class="ico">📁</span> Upload Draft</button>
+                <button class="gbtn gb-blue submit-btn" onclick="submitForm()"><span class="ico">✅</span> Submit</button>
+                <button class="gbtn gb-orange pdf-btn" onclick="generatePDF()"><span class="ico">📄</span> Generate PDF</button>
+                <button class="gbtn gb-red reset-btn" onclick="resetForm()"><span class="ico">🔄</span> Reset Form</button>
             </div>
 
         </div>
@@ -683,6 +726,17 @@
         // ── Google Apps Script Web App URL ──────────────────────
         const SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7WDM2HP5ukVhVtQCS2fwdJ2BvKnv9xszb8gMMK273j90Njwb5_nmtfgikZSdGYReciw/exec";
 
+        // ── Saving overlay (blocks the page + warns on close/refresh until data is saved) ──
+        function _blockUnload(e) { e.preventDefault(); e.returnValue = ''; return ''; }
+        function showSavingOverlay() {
+            document.getElementById('saveOverlay').classList.add('active');
+            window.addEventListener('beforeunload', _blockUnload);
+        }
+        function hideSavingOverlay() {
+            document.getElementById('saveOverlay').classList.remove('active');
+            window.removeEventListener('beforeunload', _blockUnload);
+        }
+
         async function submitForm() {
             const place        = document.getElementById('place').value.trim();
             const speedGun     = document.getElementById('speedGun').value.trim();
@@ -729,7 +783,8 @@
                 return;
             }
 
-            showMessage('⏳ Submitting data to Google Sheet… please wait.', 'success');
+            showSavingOverlay();
+            const savingStartedAt = Date.now();
 
             const submitBtn = document.querySelector('.submit-btn');
             if (submitBtn) submitBtn.disabled = true;
@@ -753,6 +808,9 @@
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
                     body:    params.toString()
                 });
+                // keep the animation visible long enough to be seen, even on a fast connection
+                const minShow = 800 - (Date.now() - savingStartedAt);
+                if (minShow > 0) await new Promise(r => setTimeout(r, minShow));
                 dataSubmitted = true;
                 try { localStorage.removeItem(AUTOSAVE_KEY); } catch (e) {}
                 // Lock the rows that were just submitted so they can never be sent again
@@ -765,6 +823,7 @@
             } catch (err) {
                 showMessage('❌ Network error — check your internet connection. (' + err.message + ')', 'error');
             } finally {
+                hideSavingOverlay();
                 if (submitBtn) submitBtn.disabled = false;
             }
         }
@@ -1173,6 +1232,39 @@
             } catch (err) {
                 localStorage.removeItem(AUTOSAVE_KEY);
             }
+        }
+
+        function resetForm() {
+            if (!confirm('RESET FORM?\n\nAll entered data, rows and signatures will be cleared and the form will become blank.')) return;
+
+            // stop any pending autosave and wipe the stored auto-draft
+            clearTimeout(autosaveTimer);
+            try { localStorage.removeItem(AUTOSAVE_KEY); } catch (err) {}
+
+            // blank table (12 default rows, all unlocked) + clear text fields and CLI names
+            restoreDraftData({ tableData: Array.from({ length: 12 }, () => ({})) });
+
+            // section type back to default, date back to today
+            document.getElementById('sectionType').value = 'AUTO';
+            handleSectionTypeChange();
+            document.getElementById('formDate').value = new Date().toISOString().split('T')[0];
+
+            // clear both uploaded signatures
+            [['sig1Upload', 'sig1Preview', 'sig1Img'], ['sig2Upload', 'sig2Preview', 'sig2Img']].forEach(([inp, prev, img]) => {
+                const i = document.getElementById(inp);  if (i) i.value = '';
+                const im = document.getElementById(img); if (im) im.removeAttribute('src');
+                const p = document.getElementById(prev); if (p) p.style.display = 'none';
+            });
+
+            // a fresh form has not been submitted yet (PDF stays locked until next Submit)
+            dataSubmitted = false;
+            if (voiceEnabled) setupVoiceInputs();
+
+            const indicator = document.getElementById('autosaveIndicator');
+            if (indicator) { indicator.innerHTML = '&nbsp;'; }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            showMessage('✅ Form reset — all fields are now blank.', 'success');
         }
 
         function clearAutosavedDraft() {
