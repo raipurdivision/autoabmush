@@ -13,7 +13,6 @@
 
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -213,47 +212,24 @@
 
         /* ════════════════════ */
 
-        .button-group { display: flex; gap: 10px; justify-content: center; flex-wrap: nowrap; margin-top: 20px; background: #e1e5e6; padding: 12px 14px; border-radius: 10px; }
+        .button-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
 
         button { padding: 12px 30px; font-size: 1em; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-        /* ── Glossy black action buttons (coloured text + coloured bottom edge) ── */
-        .gbtn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-            padding: 7px 13px; font-size: 0.78em; font-weight: 800; letter-spacing: 0.6px;
-            text-transform: uppercase; white-space: nowrap;
-            color: var(--c);
-            background: linear-gradient(180deg, #232323 0%, #000 100%);
-            border: 1px solid rgba(255,255,255,0.10);
-            border-bottom: 3px solid var(--c);
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14);
-            transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-        }
-        .gbtn .ico { font-size: 1.1em; line-height: 1; }
-        .gbtn:hover { transform: translateY(-2px); filter: brightness(1.2); box-shadow: 0 8px 16px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.18); }
-        .gbtn:active { transform: translateY(1px); box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-        .gbtn:disabled { opacity: .5; cursor: not-allowed; transform: none; filter: none; }
-        .gb-purple { --c: #c084fc; }
-        .gb-teal   { --c: #2de2b3; }
-        .gb-blue   { --c: #4da3ff; }
-        .gb-orange { --c: #ffa03c; }
-        .gb-red    { --c: #ff5a5a; }
-        .gb-green  { --c: #4cd964; }
+        .add-row-btn { background: linear-gradient(135deg, #27ae60 0%, #229954 100%); color: white; }
+        .add-row-btn:hover { background: linear-gradient(135deg, #229954 0%, #1e8449 100%); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
 
-        /* ── SAVING overlay (shown from Submit until data is saved) ── */
-        .save-overlay { display: none; position: fixed; inset: 0; background: rgba(10,20,30,0.55); backdrop-filter: blur(2px); z-index: 10000; align-items: center; justify-content: center; padding: 16px; }
-        .save-overlay.active { display: flex; }
-        .save-card { background: #fff; border-radius: 22px; padding: 36px 40px 32px; text-align: center; width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.35); animation: savePop .25s ease; }
-        @keyframes savePop { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
-        .save-ring { position: relative; width: 110px; height: 110px; margin: 0 auto 26px; }
-        .save-ring::before { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 8px solid #d8f2df; }
-        .save-ring::after  { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 8px solid transparent; border-top-color: #1e9e45; animation: saveSpin 1s linear infinite; }
-        @keyframes saveSpin { to { transform: rotate(360deg); } }
-        .save-hand { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 48px; transform-origin: 60% 85%; animation: saveWave 1.4s ease-in-out infinite; }
-        @keyframes saveWave { 0%,100% { transform: rotate(0deg); } 25% { transform: rotate(14deg); } 75% { transform: rotate(-14deg); } }
-        .save-title { color: #1a9c3e; font-size: 1.45em; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; }
-        .save-sub { color: #15803d; font-weight: 700; margin-top: 10px; font-size: 1.05em; }
+        .submit-btn { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; }
+        .submit-btn:hover { background: linear-gradient(135deg, #2980b9 0%, #21618c 100%); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+
+        .pdf-btn { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); color: white; }
+        .pdf-btn:hover { background: linear-gradient(135deg, #d35400 0%, #ba4a00 100%); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+
+        .save-draft-btn { background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); color: white; }
+        .save-draft-btn:hover { background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+
+        .upload-draft-btn { background: linear-gradient(135deg, #16a085 0%, #138d75 100%); color: white; }
+        .upload-draft-btn:hover { background: linear-gradient(135deg, #138d75 0%, #117a65 100%); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
 
         #draftFileInput { display: none; }
 
@@ -304,27 +280,147 @@
             .sig-box { flex: 1 1 100%; }
         }
 
-        /* ── Keep all action buttons in ONE row on small screens too ── */
-        @media (max-width: 768px) {
-            .button-group { flex-direction: row; flex-wrap: nowrap; gap: 5px; padding: 10px 6px; }
-            .gbtn { flex: 1 1 0; width: auto; min-width: 0; flex-direction: column; gap: 2px; padding: 6px 2px; font-size: 0.56em; letter-spacing: 0; white-space: normal; text-align: center; line-height: 1.15; }
-            .gbtn .ico { font-size: 1.6em; }
+        /* ═══ MOBILE READABILITY FIX ═══ */
+        input[type="text"], input[type="time"], input[type="date"], select, textarea {
+            color: #000 !important;
+            -webkit-text-fill-color: #000;
+            background-color: #fff;
+            opacity: 1;
+            font-family: inherit;
         }
-        body.mobile-view .button-group { flex-direction: row; flex-wrap: nowrap; gap: 5px; padding: 10px 6px; }
-        body.mobile-view .gbtn { flex: 1 1 0; width: auto; min-width: 0; flex-direction: column; gap: 2px; padding: 6px 2px; font-size: 0.56em; letter-spacing: 0; white-space: normal; text-align: center; line-height: 1.15; }
-        body.mobile-view .gbtn .ico { font-size: 1.6em; }
+        select option { color: #000; background: #fff; }
+        .table-wrapper { -webkit-overflow-scrolling: touch; }
+        @media (max-width: 768px), (pointer: coarse) {
+            table { min-width: 980px; table-layout: fixed; }
+            th { font-size: 11px; padding: 10px 4px; }
+            td { padding: 6px 4px; }
+            th:nth-child(1), td:nth-child(1) { width: 44px; }
+            th:nth-child(2), td:nth-child(2),
+            th:nth-child(3), td:nth-child(3) { width: 120px; }
+            th:nth-child(4), td:nth-child(4) { width: 130px; }
+            th:nth-child(5), td:nth-child(5) { width: 130px; }
+            th:nth-child(6), td:nth-child(6) { width: 150px; }
+            th:nth-child(7), td:nth-child(7),
+            th:nth-child(8), td:nth-child(8) { width: 90px; }
+            th:nth-child(9), td:nth-child(9) { width: 170px; }
+            td input[type="text"], td select, td textarea {
+                font-size: 16px !important;   /* 16px also stops iOS zoom-on-focus */
+                font-weight: 700;
+                min-height: 44px;
+                padding: 8px 6px !important;
+                line-height: 1.2;
+                text-align: center;
+                box-sizing: border-box;
+                text-overflow: clip;
+            }
+            td textarea { text-align: left; min-height: 60px; }
+            .info-field input, .info-field select, #sectionType,
+            input[type="date"], input[type="time"], .remarks-section textarea {
+                font-size: 16px !important;
+                min-height: 44px;
+                box-sizing: border-box;
+            }
+        }
+        body.mobile-view td input[type="text"], body.mobile-view td select, body.mobile-view td textarea,
+        body.mobile-view th, body.mobile-view td { font-size: 16px !important; }
+        body.mobile-view th { font-size: 11px !important; }
+        body.mobile-view td:first-child { font-size: 14px !important; }
+
+        /* ═══ SCREENSHOT UPLOAD + PDF READY DIALOG ═══ */
+        .shots-section { margin: 15px 0 20px; padding: 14px; background: #f0f8ff; border: 2px dashed #4a90e2; border-radius: 10px; }
+        .shots-section label.shots-title { display: block; font-weight: bold; color: #2c3e50; margin-bottom: 8px; font-size: 13px; }
+        .shots-section input[type="file"] { width: 100%; padding: 8px; border: 2px solid #b3d9ff; border-radius: 5px; background: #fff; font-size: 14px; }
+        .shots-hint { font-size: 11px; color: #666; margin-top: 6px; }
+        .shots-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+        .shot-item { position: relative; width: 90px; height: 90px; border: 2px solid #b3d9ff; border-radius: 8px; overflow: hidden; background: #fff; }
+        .shot-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .shot-item button { position: absolute; top: 2px; right: 2px; width: 24px !important; height: 24px; padding: 0 !important; border: none; border-radius: 50%; background: #e74c3c; color: #fff; font-size: 14px !important; line-height: 24px; cursor: pointer; }
+        .shot-item span { position: absolute; left: 0; bottom: 0; background: rgba(0,0,0,.6); color: #fff; font-size: 10px; padding: 1px 5px; border-top-right-radius: 6px; }
+
+        .pdf-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 10000; align-items: center; justify-content: center; padding: 16px; }
+        .pdf-modal.active { display: flex; }
+        .pdf-modal-box { background: #fff; width: 100%; max-width: 380px; border-radius: 20px; padding: 24px 20px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,.4); }
+        .pdf-modal-box h3 { color: #16a34a; font-size: 1.5em; margin-bottom: 6px; }
+        .pdf-modal-box p { color: #444; font-size: 14px; margin-bottom: 16px; }
+        .pdf-modal-box a.pm-btn, .pdf-modal-box button.pm-btn { display: block; width: 100%; padding: 14px; margin-top: 10px; border: none; border-radius: 14px; font-size: 16px; font-weight: bold; text-decoration: none; cursor: pointer; text-transform: uppercase; box-sizing: border-box; }
+        .pm-download { background: #16a34a; color: #fff; }
+        .pm-share { background: #eee; color: #222; }
+        .pm-close { background: #eee; color: #222; }
+
+        /* ═══ MOBILE UI (body.mobile-ui is set by JS: screen <= 768px OR Mobile toggle ON) ═══ */
+        .btn-ic { display: none; }
+        body.mobile-ui {
+            padding: 0 0 96px 0 !important;      /* room for fixed bottom bar */
+            background: #e4e7e7 !important;       /* hide page background */
+        }
+        body.mobile-ui .container {
+            max-width: 100% !important; width: 100%; margin: 0 !important;
+            border-radius: 0 !important; box-shadow: none !important; background: #e4e7e7 !important;
+        }
+        body.mobile-ui .form-container { padding: 8px 4px !important; }
+        body.mobile-ui .info-section,
+        body.mobile-ui .checklist-section { padding: 10px 8px !important; border-radius: 6px; margin-bottom: 10px; }
+        body.mobile-ui .info-fields { flex-direction: column !important; gap: 10px; }
+        body.mobile-ui .info-field { flex: 0 0 auto !important; width: 100% !important; max-width: 100%; }
+        body.mobile-ui .info-field input,
+        body.mobile-ui .info-field select,
+        body.mobile-ui #sectionType { width: 100% !important; }
+        body.mobile-ui .table-wrapper { border-radius: 0; margin: 0 0 12px; box-shadow: none; }
+        body.mobile-ui .remarks-section textarea { width: 100%; min-height: 90px; font-size: 16px !important; }
+        body.mobile-ui .shots-section { margin: 10px 0; padding: 10px 8px; }
+        body.mobile-ui .dual-sig-section { flex-direction: column; gap: 10px; }
+        body.mobile-ui .sig-box { flex: 1 1 100%; }
+        body.mobile-ui .add-row-btn { width: 100%; }
+        body.mobile-ui .button-group:not(.bottom-bar) { flex-direction: column; }
+
+        /* ── Fixed bottom action bar ── */
+        body.mobile-ui .bottom-bar {
+            position: fixed; left: 0; right: 0; bottom: 0; z-index: 9000;
+            display: flex !important; flex-direction: row !important; flex-wrap: nowrap;
+            justify-content: space-between; gap: 6px; margin: 0 !important;
+            padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+            background: #fff; box-shadow: 0 -3px 12px rgba(0,0,0,.25);
+        }
+        body.mobile-ui .bottom-bar button {
+            flex: 1 1 0; min-width: 0; width: auto !important;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+            padding: 8px 2px !important; height: 56px;
+            background: #1b1f2a !important; color: #fff !important;
+            font-size: 10px !important; font-weight: 700; letter-spacing: 0; text-transform: none; line-height: 1.1;
+            border: none; border-bottom: 3px solid #888; border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,.35); transform: none !important;
+        }
+        body.mobile-ui .bottom-bar button .btn-ic { display: block; font-size: 17px; line-height: 1; }
+        body.mobile-ui .bottom-bar .b-save   { border-bottom-color: #8e44ad; }
+        body.mobile-ui .bottom-bar .b-upload { border-bottom-color: #16a085; }
+        body.mobile-ui .bottom-bar .b-submit { border-bottom-color: #3498db; }
+        body.mobile-ui .bottom-bar .b-pdf    { border-bottom-color: #e67e22; }
+        body.mobile-ui .bottom-bar .b-reset  { border-bottom-color: #c0392b; }
+        body.mobile-ui .bottom-bar button:disabled { opacity: .5; }
+        body.mobile-ui #message { margin-bottom: 8px; }
+
+        /* ── Saving overlay ── */
+        .saving-overlay { display: none; position: fixed; inset: 0; z-index: 10001; background: rgba(0,0,0,.55); align-items: center; justify-content: center; padding: 16px; }
+        .saving-overlay.active { display: flex; }
+        .saving-box { background: #fff; width: 100%; max-width: 420px; border-radius: 22px; padding: 30px 18px 26px; text-align: center; box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+        .saving-ring { position: relative; width: 120px; height: 120px; margin: 0 auto 22px; }
+        .saving-ring::before { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 9px solid #dcf3e2; }
+        .saving-ring::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 9px solid transparent; border-bottom-color: #16a34a; border-right-color: #16a34a; animation: savingSpin 1s linear infinite; }
+        .saving-ring span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 48px; animation: savingPulse 1.2s ease-in-out infinite; }
+        @keyframes savingSpin { to { transform: rotate(360deg); } }
+        @keyframes savingPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+        .saving-title { color: #16a34a; font-size: 1.25em; font-weight: 800; text-transform: uppercase; }
+        .saving-sub { color: #15803d; font-size: 14px; font-weight: 700; margin-top: 8px; }
+
+        .saving-box.done .saving-ring::after { animation: none; border-color: #16a34a; }
+        .saving-box.done .saving-ring span { animation: none; }
+        .saving-box.done.fail .saving-ring::before, .saving-box.done.fail .saving-ring::after { border-color: #dc2626; }
+        .saving-box.done.fail .saving-title, .saving-box.done.fail .saving-sub { color: #dc2626; }
+        .submit-btn.is-submitted, .submit-btn.is-submitted:hover { background: #7f8c8d !important; color: #e5e5e5 !important; cursor: not-allowed; transform: none; box-shadow: none; }
+        body.mobile-ui .bottom-bar .submit-btn.is-submitted { background: #4a5060 !important; color: #aeb4c0 !important; }
     </style>
 </head>
 <body>
-    <!-- Saving overlay -->
-    <div class="save-overlay" id="saveOverlay" role="alert" aria-live="assertive">
-        <div class="save-card">
-            <div class="save-ring"><div class="save-hand">✋</div></div>
-            <div class="save-title">⏳ Please wait — data saving...</div>
-            <div class="save-sub">Do not close or refresh this page</div>
-        </div>
-    </div>
-
     <!-- Zoom Overlay for Mobile View -->
     <div class="zoom-overlay" id="zoomOverlay">
         <div class="zoom-input-container">
@@ -439,7 +535,7 @@
             </div>
 
             <div class="button-group" style="margin-top:20px;margin-bottom:20px;">
-                <button class="gbtn gb-green add-row-btn" onclick="addRow()"><span class="ico">➕</span> Add Row</button>
+                <button class="add-row-btn" onclick="addRow()">+ Add Row</button>
             </div>
 
             <div class="remarks-section">
@@ -660,18 +756,46 @@
             </div>
             <!-- END DUAL SIGNATURE SECTION -->
 
+            <!-- ═══ SCREENSHOT ATTACHMENTS ═══ -->
+            <div class="shots-section">
+                <label class="shots-title" for="shotUpload">📎 Attach Screenshots (added to the end of the PDF)</label>
+                <input type="file" id="shotUpload" accept="image/*" multiple onchange="handleShotUpload(event)">
+                <div class="shots-hint">You can select several images. Tap ✕ on a thumbnail to remove it.</div>
+                <div id="shotGrid" class="shots-grid"></div>
+            </div>
+
             <input type="file" id="draftFileInput" accept=".json" onchange="handleDraftUpload(event)">
 
             <div id="message" class="message"></div>
             <div id="autosaveIndicator" style="font-size:11px;color:#888;text-align:right;margin:2px 4px;opacity:0.5;transition:opacity 0.4s;">&nbsp;</div>
-            <div class="button-group">
-                <button class="gbtn gb-purple save-draft-btn" onclick="saveDraft()"><span class="ico">💾</span> Save Draft</button>
-                <button class="gbtn gb-teal upload-draft-btn" onclick="document.getElementById('draftFileInput').click()"><span class="ico">📁</span> Upload Draft</button>
-                <button class="gbtn gb-blue submit-btn" onclick="submitForm()"><span class="ico">✅</span> Submit</button>
-                <button class="gbtn gb-orange pdf-btn" onclick="generatePDF()"><span class="ico">📄</span> Generate PDF</button>
-                <button class="gbtn gb-red reset-btn" onclick="resetForm()"><span class="ico">🔄</span> Reset Form</button>
+            <div class="button-group bottom-bar">
+                <button class="save-draft-btn b-save" onclick="saveDraft()"><span class="btn-ic">💾</span>Save Draft</button>
+                <button class="upload-draft-btn b-upload" onclick="document.getElementById('draftFileInput').click()"><span class="btn-ic">📂</span>Upload Draft</button>
+                <button class="submit-btn b-submit" onclick="submitForm()"><span class="btn-ic">✅</span>Submit</button>
+                <button class="pdf-btn b-pdf" onclick="generatePDF()"><span class="btn-ic">📄</span>Generate PDF</button>
+                <button class="save-draft-btn b-reset" style="background:linear-gradient(135deg,#c0392b 0%,#922b21 100%);" onclick="resetForm()"><span class="btn-ic">🔄</span>Reset</button>
             </div>
 
+        </div>
+    </div>
+
+    <!-- SAVING OVERLAY -->
+    <div id="savingOverlay" class="saving-overlay">
+        <div class="saving-box">
+            <div class="saving-ring"><span>✋</span></div>
+            <div class="saving-title">⏳ Please wait — data saving…</div>
+            <div class="saving-sub">Do not close or refresh this page</div>
+        </div>
+    </div>
+
+    <!-- PDF READY DIALOG -->
+    <div id="pdfModal" class="pdf-modal">
+        <div class="pdf-modal-box">
+            <h3>📄 PDF ready</h3>
+            <p>If the download did not start, tap the button below.</p>
+            <a id="pdfDownloadLink" class="pm-btn pm-download" href="#">⬇️ Download PDF</a>
+            <button type="button" class="pm-btn pm-share" onclick="sharePdf()">📤 Share / Save PDF</button>
+            <button type="button" class="pm-btn pm-close" onclick="closePdfModal()">Close</button>
         </div>
     </div>
 
@@ -719,23 +843,13 @@
                 <td><textarea rows="2"></textarea></td>
             `;
             tableBody.appendChild(newRow);
+            setSubmitted(false);
             if (voiceEnabled) setupVoiceInputs();
             showMessage('Row added successfully!', 'success');
         }
 
         // ── Google Apps Script Web App URL ──────────────────────
         const SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7WDM2HP5ukVhVtQCS2fwdJ2BvKnv9xszb8gMMK273j90Njwb5_nmtfgikZSdGYReciw/exec";
-
-        // ── Saving overlay (blocks the page + warns on close/refresh until data is saved) ──
-        function _blockUnload(e) { e.preventDefault(); e.returnValue = ''; return ''; }
-        function showSavingOverlay() {
-            document.getElementById('saveOverlay').classList.add('active');
-            window.addEventListener('beforeunload', _blockUnload);
-        }
-        function hideSavingOverlay() {
-            document.getElementById('saveOverlay').classList.remove('active');
-            window.removeEventListener('beforeunload', _blockUnload);
-        }
 
         async function submitForm() {
             const place        = document.getElementById('place').value.trim();
@@ -783,8 +897,8 @@
                 return;
             }
 
-            showSavingOverlay();
-            const savingStartedAt = Date.now();
+            showSaving(true);
+            const savingStart = Date.now();
 
             const submitBtn = document.querySelector('.submit-btn');
             if (submitBtn) submitBtn.disabled = true;
@@ -801,6 +915,7 @@
             params.append("otherRemarks", otherRemarks);
             params.append("records",      JSON.stringify(records));
 
+            let saveOk = false, savedCount = 0, errMsg = '';
             try {
                 await fetch(SHEET_SCRIPT_URL, {
                     method:  "POST",
@@ -808,9 +923,6 @@
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
                     body:    params.toString()
                 });
-                // keep the animation visible long enough to be seen, even on a fast connection
-                const minShow = 800 - (Date.now() - savingStartedAt);
-                if (minShow > 0) await new Promise(r => setTimeout(r, minShow));
                 dataSubmitted = true;
                 try { localStorage.removeItem(AUTOSAVE_KEY); } catch (e) {}
                 // Lock the rows that were just submitted so they can never be sent again
@@ -819,18 +931,165 @@
                     row.style.opacity = '0.6';
                     row.querySelectorAll('input, select, textarea').forEach(el => el.disabled = true);
                 });
-                showMessage('✅ Data submitted! ' + records.length + ' NEW row(s) saved to Google Sheet.', 'success');
+                saveOk = true;
+                savedCount = records.length;
             } catch (err) {
-                showMessage('❌ Network error — check your internet connection. (' + err.message + ')', 'error');
+                errMsg = err.message;
             } finally {
-                hideSavingOverlay();
-                if (submitBtn) submitBtn.disabled = false;
+                // keep the animation visible at least ~1s so it never just flashes
+                const wait = Math.max(0, 1000 - (Date.now() - savingStart));
+                setTimeout(() => {
+                    if (saveOk) {
+                        setSubmitted(true);
+                        showSavingResult(true);
+                        setTimeout(() => {
+                            showSaving(false);
+                            showMessage('✅ DATA SAVED! ' + savedCount + ' NEW row(s) saved to Google Sheet.', 'success');
+                        }, 1400);
+                    } else {
+                        if (submitBtn) submitBtn.disabled = false;
+                        showSavingResult(false);
+                        setTimeout(() => {
+                            showSaving(false);
+                            showMessage('❌ Network error — data NOT saved. Check your internet and try again. (' + errMsg + ')', 'error');
+                        }, 1600);
+                    }
+                }, wait);
             }
         }
+
+        function showSavingResult(ok) {
+            const box = document.querySelector('#savingOverlay .saving-box');
+            box.classList.add('done');
+            box.classList.toggle('fail', !ok);
+            box.querySelector('.saving-ring span').textContent = ok ? '✅' : '❌';
+            box.querySelector('.saving-title').textContent = ok ? '✅ DATA SAVED!' : '❌ DATA NOT SAVED';
+            box.querySelector('.saving-sub').textContent = ok ? 'Your data was saved successfully' : 'Please check your internet and try again';
+        }
+
+        /* Submit button state: "Submit" <-> "Submitted" */
+        function setSubmitted(done) {
+            const b = document.querySelector('.submit-btn');
+            if (!b) return;
+            b.classList.toggle('is-submitted', done);
+            b.disabled = done;
+            b.innerHTML = done ? '<span class="btn-ic">✅</span>Submitted' : '<span class="btn-ic">✅</span>Submit';
+        }
+
+        function showSaving(on) {
+            if (on) {
+                const box = document.querySelector('#savingOverlay .saving-box');
+                box.classList.remove('done', 'fail');
+                box.querySelector('.saving-ring span').textContent = '✋';
+                box.querySelector('.saving-title').textContent = '⏳ Please wait — data saving…';
+                box.querySelector('.saving-sub').textContent = 'Do not close or refresh this page';
+            }
+            document.getElementById('savingOverlay').classList.toggle('active', on);
+            window.onbeforeunload = on ? (e) => { e.preventDefault(); e.returnValue = ''; return ''; } : null;
+        }
+
+        function resetForm() {
+            if (!confirm('Reset the form? All fields and the auto-saved draft will be cleared.')) return;
+            try { clearAutosavedDraft(); } catch (e) {}
+            window.onbeforeunload = null;
+            location.reload();
+        }
+
+        /* Mobile UI class: small screens OR Mobile toggle */
+        function applyMobileUI() {
+            const t = document.getElementById('mobileToggle');
+            const on = window.innerWidth <= 768 || (t && t.checked);
+            document.body.classList.toggle('mobile-ui', on);
+        }
+        window.addEventListener('resize', applyMobileUI);
+        window.addEventListener('orientationchange', applyMobileUI);
 
         /* ═══════════════════════════════
            PDF GENERATION — with dual signatures
         ═══════════════════════════════ */
+        /* ── Screenshot attachments ── */
+        let screenshots = [];   // [{name, dataUrl, w, h}]
+
+        function fileToCompressedJpeg(file, maxDim) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let w = img.naturalWidth, h = img.naturalHeight;
+                        const scale = Math.min(1, maxDim / Math.max(w, h));
+                        w = Math.round(w * scale); h = Math.round(h * scale);
+                        const c = document.createElement('canvas');
+                        c.width = w; c.height = h;
+                        const ctx = c.getContext('2d');
+                        ctx.fillStyle = '#fff';
+                        ctx.fillRect(0, 0, w, h);
+                        ctx.drawImage(img, 0, 0, w, h);
+                        resolve({ name: file.name, dataUrl: c.toDataURL('image/jpeg', 0.85), w, h });
+                    };
+                    img.onerror = () => resolve(null);
+                    img.src = e.target.result;
+                };
+                reader.onerror = () => resolve(null);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function handleShotUpload(event) {
+            const files = Array.from(event.target.files || []);
+            for (const f of files) {
+                const item = await fileToCompressedJpeg(f, 1600);
+                if (item) screenshots.push(item);
+            }
+            event.target.value = '';   // allow re-selecting same file
+            renderShots();
+        }
+
+        function renderShots() {
+            const grid = document.getElementById('shotGrid');
+            grid.innerHTML = '';
+            screenshots.forEach((s, i) => {
+                const d = document.createElement('div');
+                d.className = 'shot-item';
+                d.innerHTML = '<img alt="Screenshot ' + (i + 1) + '"><span>' + (i + 1) + '</span><button type="button" title="Remove">✕</button>';
+                d.querySelector('img').src = s.dataUrl;
+                d.querySelector('button').onclick = () => { screenshots.splice(i, 1); renderShots(); };
+                grid.appendChild(d);
+            });
+        }
+
+        /* ── PDF ready dialog ── */
+        let lastPdfBlob = null, lastPdfUrl = null, lastPdfName = '';
+
+        function showPdfModal(blob, filename) {
+            if (lastPdfUrl) URL.revokeObjectURL(lastPdfUrl);
+            lastPdfBlob = blob;
+            lastPdfName = filename;
+            lastPdfUrl = URL.createObjectURL(blob);
+            const a = document.getElementById('pdfDownloadLink');
+            a.href = lastPdfUrl;
+            a.download = filename;
+            document.getElementById('pdfModal').classList.add('active');
+            // try automatic download too
+            try { a.click(); } catch (e) {}
+        }
+
+        function closePdfModal() {
+            document.getElementById('pdfModal').classList.remove('active');
+        }
+
+        async function sharePdf() {
+            if (!lastPdfBlob) return;
+            const file = new File([lastPdfBlob], lastPdfName, { type: 'application/pdf' });
+            try {
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({ files: [file], title: lastPdfName });
+                } else {
+                    document.getElementById('pdfDownloadLink').click();
+                }
+            } catch (e) { /* user cancelled share */ }
+        }
+
         function generatePDF() {
             if (!dataSubmitted) {
                 showMessage('⚠️ Please SUBMIT data first before generating PDF!', 'error');
@@ -1075,10 +1334,27 @@
                 doc.line(leftX, sigY + sigH + 1, leftX + sigW, sigY + sigH + 1);
                 doc.line(rightX, sigY + sigH + 1, rightX + sigW, sigY + sigH + 1);
 
+                // ── Attached screenshots: one per page, fitted to A4 ──
+                const pgW = doc.internal.pageSize.getWidth();
+                const pgH = doc.internal.pageSize.getHeight();
+                screenshots.forEach((s, i) => {
+                    doc.addPage();
+                    doc.setFontSize(10);
+                    doc.setFont(undefined, 'bold');
+                    doc.setTextColor(0, 51, 102);
+                    doc.text('Attached Screenshot ' + (i + 1) + ' of ' + screenshots.length, 12, 12);
+                    doc.setTextColor(0, 0, 0);
+                    const maxW = pgW - 24, maxH = pgH - 30;
+                    const ratio = Math.min(maxW / s.w, maxH / s.h);
+                    const iw = s.w * ratio, ih = s.h * ratio;
+                    doc.addImage(s.dataUrl, 'JPEG', (pgW - iw) / 2, 18, iw, ih);
+                });
+
                 // Save
                 const timestamp = new Date().toISOString().split('T')[0];
-                doc.save('Ambush_Check_Auto_Signalling_' + timestamp + '.pdf');
-                showMessage('PDF generated and downloaded successfully!', 'success');
+                const fname = 'Ambush_Check_Auto_Signalling_' + timestamp + '.pdf';
+                showPdfModal(doc.output('blob'), fname);
+                showMessage('PDF generated successfully!', 'success');
             });
         }
 
@@ -1234,39 +1510,6 @@
             }
         }
 
-        function resetForm() {
-            if (!confirm('RESET FORM?\n\nAll entered data, rows and signatures will be cleared and the form will become blank.')) return;
-
-            // stop any pending autosave and wipe the stored auto-draft
-            clearTimeout(autosaveTimer);
-            try { localStorage.removeItem(AUTOSAVE_KEY); } catch (err) {}
-
-            // blank table (12 default rows, all unlocked) + clear text fields and CLI names
-            restoreDraftData({ tableData: Array.from({ length: 12 }, () => ({})) });
-
-            // section type back to default, date back to today
-            document.getElementById('sectionType').value = 'AUTO';
-            handleSectionTypeChange();
-            document.getElementById('formDate').value = new Date().toISOString().split('T')[0];
-
-            // clear both uploaded signatures
-            [['sig1Upload', 'sig1Preview', 'sig1Img'], ['sig2Upload', 'sig2Preview', 'sig2Img']].forEach(([inp, prev, img]) => {
-                const i = document.getElementById(inp);  if (i) i.value = '';
-                const im = document.getElementById(img); if (im) im.removeAttribute('src');
-                const p = document.getElementById(prev); if (p) p.style.display = 'none';
-            });
-
-            // a fresh form has not been submitted yet (PDF stays locked until next Submit)
-            dataSubmitted = false;
-            if (voiceEnabled) setupVoiceInputs();
-
-            const indicator = document.getElementById('autosaveIndicator');
-            if (indicator) { indicator.innerHTML = '&nbsp;'; }
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            showMessage('✅ Form reset — all fields are now blank.', 'success');
-        }
-
         function clearAutosavedDraft() {
             try { localStorage.removeItem(AUTOSAVE_KEY); } catch (err) {}
             showMessage('Auto-saved draft cleared.', 'success');
@@ -1398,6 +1641,7 @@
         function toggleMobileView() {
             const on = document.getElementById('mobileToggle').checked;
             document.body.classList.toggle('mobile-view', on);
+            applyMobileUI();
             showMessage(on ? 'Mobile view enabled!' : 'Mobile view disabled!', 'success');
         }
 
@@ -1407,6 +1651,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            applyMobileUI();
             document.getElementById('formDate').value = new Date().toISOString().split('T')[0];
             const remarksTA = document.getElementById('otherRemarks');
             if (remarksTA) remarksTA.addEventListener('input', function() { autoResizeTextarea(this); });
@@ -1424,6 +1669,11 @@
             // Auto-save on any form edit (debounced), covers dynamically-added table rows via delegation
             const formContainer = document.querySelector('.container') || document.body;
             formContainer.addEventListener('input', function(event) {
+                // editing any not-yet-submitted row (or header fields) re-enables Submit
+                const tr = event.target.closest && event.target.closest('tr');
+                if (!tr || tr.dataset.submitted !== '1') {
+                    if (['sig1Upload','sig2Upload','shotUpload'].indexOf(event.target.id) === -1 && event.target.closest('#tableBody')) setSubmitted(false);
+                }
                 if (event.target.id === 'sig1Upload' || event.target.id === 'sig2Upload') return;
                 scheduleAutosave();
             });
